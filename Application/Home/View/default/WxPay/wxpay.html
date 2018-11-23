@@ -1,0 +1,44 @@
+<script src="__JS__/jquery.min.js"></script>
+<script type="text/javascript">
+function jsApiCall(){
+	WeixinJSBridge.invoke(
+		'getBrandWCPayRequest',
+		{$jsApiParameters},
+		function(res){
+			//WeixinJSBridge.log(res.err_msg);
+			// alert(res.err_msg);
+			//    alert(JSON.stringify(res));
+			if(res.err_msg == "get_brand_wcpay_request:fail" || res.err_msg == "get_brand_wcpay_request:cancel"){
+				window.location.href="{$cancel_url}";
+			}
+			if(res.err_msg == 'get_brand_wcpay_request:ok' ){
+
+				var order_id = "{$order_id}";
+
+				$.post("{:U('PayNotify/notify2')}",{'order_id':order_id}, function(data){
+
+					if(data){
+						window.location.href="{$return_url}"
+					}
+				});
+
+				//location.href='__URL__/show?action=1&orderid={$orderid}';
+			}else{
+				//location.href='__URL__/show?action=0&orderid={$orderid}';
+			}
+		}
+	);
+}
+;(function(){
+	if (typeof WeixinJSBridge == "undefined"){
+		if( document.addEventListener ){
+			document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+		}else if (document.attachEvent){
+			document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+			document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+		}
+	}else{
+		jsApiCall();
+	}
+})();
+</script>

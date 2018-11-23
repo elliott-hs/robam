@@ -1,0 +1,90 @@
+<extend name="Public/base"/>
+
+<block name="sidebar"></block>
+
+<block name="style">
+    <style>
+        body{padding: 0}
+    </style>
+</block>
+
+<block name="body">
+    <!-- 主体 -->
+    <div id="indexMain" class="index-main">
+       <!-- 插件块 -->
+       <div class="container-span top-columns cf" style="margin-top:30px;">
+    <dl class="show-num-mod">
+        <a href="{:U('user/index')}">
+        <dt><i class="count-icon user-count-icon"></i></dt>
+        <dd>
+            <strong>{:count_users()}</strong>
+            <span>渠道商</span>
+        </dd>
+        </a>
+    </dl>
+    <dl class="show-num-mod">
+        <a href="{:U('goods/index',array('status'=>2))}">
+        <dt><i class="count-icon user-action-icon"></i></dt>
+        <dd>
+            <strong>{:count_goods()}</strong>
+            <span>商品数量</span>
+        </dd>
+        </a>
+    </dl>
+    <dl class="show-num-mod">
+        <a href="{:U('orders/index')}">
+        <dt><i class="count-icon doc-count-icon"></i></dt>
+        <dd>
+            <strong>{:count_orders()}</strong>
+            <span>订单数</span>
+        </dd>
+        </a>
+    </dl>
+    <dl class="show-num-mod">
+        <a href="{:U('orders/index')}">
+        <dt><i class="count-icon doc-count-icon"></i></dt>
+        <dd>
+            <strong>{:count_amount()}</strong>
+            <span>交易总额</span>
+        </dd>
+        </a>
+    </dl>
+    <dl class="show-num-mod">
+        <a href="{:U('user/index')}">
+        <dt><i class="count-icon doc-modal-icon"></i></dt>
+        <dd>
+            <strong>{:count_agent_reward()}</strong>
+            <span>渠道商提成</span>
+        </dd>
+        </a>
+    </dl>
+  
+    <dl class="show-num-mod">
+        <a href="{:U('user/index')}">
+        <dt><i class="count-icon category-count-icon"></i></dt>
+        <dd>
+            <strong>待审核</strong>
+            <span>渠道商任务奖励</span>
+        </dd>
+        </a>
+    </dl>
+</div>
+    </div>
+</block>
+
+<block name="script">
+<script type="text/javascript">
+    /* 插件块关闭操作 */
+    $(".title-opt .wm-slide").each(function(){
+        $(this).click(function(){
+            $(this).closest(".columns-mod").find(".bd").toggle();
+            $(this).find("i").toggleClass("mod-up");
+        });
+    })
+    $(function(){
+        // $('#main').attr({'id': 'indexMain','class': 'index-main'});
+        $('.copyright').html('<div class="copyright"> ©2017-2019 <a href="" target="_blank"></a>姑苏区厨源家电生活馆</div>');
+        $('.sidebar').remove();
+    })
+</script>
+</block>

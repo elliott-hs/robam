@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<!-- 临时禁用缓存，避免css缓存 -->
+<title>订单确认</title>
+<link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__CSS__/base.css" rel="stylesheet">
+<link href="__CSS__/order_confirm.css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/bootstrap.min.js"></script>
+
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+</head>
+<body>
+<div class="container">
+  <div class="fix">
+	<!--head begin 1-->
+	<div id="lb_head" class="row">
+	  <div class="col-sm-1 col-xs-2 head_fdj">
+	  </div>
+	  <div class="col-sm-10 col-xs-8 head_title"><a href="#">订单确认</a></div>
+	  <div class="col-sm-1 col-xs-2 head_jia"></div>
+	</div>
+	<!--head end 1-->
+  </div>
+  <!--lb_type begin 2-->
+  <div id="lb_send" class="row lb_pro">
+	<div class="col-sm-2 col-xs-2 text-center"  style="margin-top:15px;">
+		<font size="5"><i class="glyphicon glyphicon-send"></i></font>
+	</div>
+	<if condition="$address">
+	<div class="col-sm-6 col-xs-6 text-left" style="line-height:30px; padding:5px;vertical-align:middle;">
+		<div class="col-sm-12 col-xs-12"><strong style="font-size:16px">{$address.name}</strong>{$address.phone}</div>
+		<div class="col-sm-12 col-xs-12">{$address.area}{$address.address}</div>
+	</div>
+	<div class="col-sm-4 col-xs-4 text-center" style="margin-top:10px;">
+		<a href="{:U('address/index')}" class="btn btn-default" role="button"><strong>更换</strong></a>
+	</div>
+	</if>
+
+  </div>
+  <!--lb_task end 2-->
+  <!--lb_order begin 3-->
+  <form  action="{:U('order/pay')}" method="post" id="order">
+	<input type="hidden" name="address_id" value="{$address.id}">
+	<input type="hidden" name="order_id" value="{$orders.order_id}">
+  	<div id="lb_order" class="row lb_pro lb_common">
+	<div class="col-sm-12 col-xs-12" style="padding-left:10px;">
+		<div class="col-sm-12 col-xs-12 text-left">
+		订单号:{$orders.order_id}
+		</div>
+
+
+		<foreach  name="items" item="vo">
+		<div class="col-sm-12 col-xs-12 text-left order_title" style="padding-left:25px;">
+			<div class="col-sm-6 col-xs-6 text-left" >
+				{$vo.goods_name}
+			</div>
+			<div class="col-sm-2 col-xs-2 text-left" >
+				<i class="glyphicon glyphicon-remove"></i> {$vo.sell_num}
+			</div>
+			<div class="col-sm-4 col-xs-4 text-left" >
+				单价：<font color="#FF0000">¥{$vo.unit_price|floatval}</font>
+			</div>
+		</div>
+		</foreach>
+	</div>
+   	<div class="col-sm-12 col-xs-12 text-left lb_bg" style="padding-left:10px;">
+			配送信息:
+	</div>
+	<div class="col-sm-12 col-xs-12 text-left lb_border" style="padding-left:25px;">
+		<div class="col-sm-12 col-xs-6 text-left" >
+			<input type="text" name="game_start" class="form-control time" value="{$data.game_start}" placeholder="配送日期">
+		</div>
+
+	</div>
+	<div class="col-sm-12 col-xs-12 text-left lb_border" style="padding-left:25px;">
+		<div class="col-sm-6 col-xs-4 text-left" >
+			物流费
+		</div>
+		<div class="col-sm-2 col-xs-2 text-left" >
+		</div>
+		<div class="col-sm-4 col-xs-6 text-left" >
+			<font color="#FF0000">¥ {$orders.price_express|floatval}</font>
+		</div>
+	</div>
+	<div class="col-sm-12 col-xs-12 text-left lb_bg" style="padding-left:10px;">
+			金额明细:
+	</div>
+	<div class="col-sm-12 col-xs-12 text-left lb_border" style="padding-left:25px;">
+		<div class="col-sm-6 col-xs-4 text-left" >
+			商品总价
+		</div>
+		<div class="col-sm-2 col-xs-2 text-left" >
+		</div>
+		<div class="col-sm-4 col-xs-6 text-left" >
+			<font color="#FF0000">¥ {$orders.price_order|floatval}</font>
+		</div>
+	</div>
+
+
+
+	 <div class="col-sm-12 col-xs-12 text-left lb_bg" style="padding-left:10px;">
+			支付方式:
+	</div>
+  <!--   <div class="col-sm-12 col-xs-12 text-left lb_border" >
+		<div class="col-sm-6 col-xs-4 text-left" >
+			支付宝
+		</div>
+		<div class="col-sm-2 col-xs-2 text-left" >
+		</div>
+		<div class="col-sm-4 col-xs-6 text-center" >
+			<label for="fk_1"><input type="radio" id="fk_1" name="fk"  value="1" checked></label>
+		</div>
+	</div> -->
+<!-- 	<div class="col-sm-12 col-xs-12 text-left lb_border" style="padding-left:25px;">
+		<div class="col-sm-6 col-xs-4 text-left"  >
+			货到付款
+		</div>
+		<div class="col-sm-2 col-xs-2 text-left" >
+		</div>
+		<div class="col-sm-4 col-xs-6 text-center" >
+			<label for="fk_4" style="margin-top:10px;"><input type="radio" id="fk_4" name="fk"  value="0" checked></label>
+		</div>
+	</div> -->
+	<div class="col-sm-12 col-xs-12 text-left lb_border" style="padding-left:25px;">
+		<div class="col-sm-6 col-xs-4 text-left" >
+			微信支付
+		</div>
+		<div class="col-sm-2 col-xs-2 text-left" >
+		</div>
+		<div class="col-sm-4 col-xs-6 text-center" >
+			<label for="fk_2"  style="margin-top:10px;"><input type="radio" id="fk_2" name="fk"  value="2" checked></label>
+		</div>
+	</div>
+<!--     <div class="col-sm-12 col-xs-12 text-left lb_border" >
+		<div class="col-sm-6 col-xs-4 text-left" >
+			网银
+		</div>
+		<div class="col-sm-2 col-xs-2 text-left" >
+		</div>
+		<div class="col-sm-4 col-xs-6 text-center" >
+			<label for="fk_3"><input type="radio" id="fk_3" name="fk"  value="3"></label>
+		</div>
+	</div> -->
+
+	<div class="col-sm-12 col-xs-12 text-left lb_bg" style="padding-left:10px;">
+			优惠:
+	</div>
+	 <div class="col-sm-12 col-xs-12 text-left lb_border" style="padding-left:10px;">
+			<div class="col-sm-11 col-xs-11"  >
+			<input type="text" name="agent_cut" class="form-control" max="{$orders.reward_money}">
+		</div>
+	</div>
+	<div class="col-sm-12 col-xs-12 text-left lb_border" >
+		<div class="col-sm-6 col-xs-4 text-left" >
+		</div>
+		<div class="col-sm-2 col-xs-4 text-right" >
+		共 <font color="#FF0000">¥ {$orders.price_order|floatval}</font>
+		</div>
+		<div class="col-sm-4 col-xs-4 text-right" >
+			<a onclick="pay()" class="btn btn-danger btn-lg active" role="button">立刻支付</a>
+
+		</div>
+	</div>
+
+
+  </div>
+  <form>
+  <!--lb_order end 3-->
+</div>
+<div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+	<div class="modal-content">
+		  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><!-- <span aria-hidden="true">&times;</span> --></button>
+		<h4 class="modal-title" id="exampleModalLabel">提示</h4>
+	  </div>
+	  <div class="modal-body">
+		你还没有默认的收货地址，请设置收货地址
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">取消</button>
+		<button type="button" class="btn btn-primary" onclick="window.location='{:u('Address/index')}'">确认</button>
+	  </div>
+	</div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+
+	$(function($) {
+		var set_address = <?php echo $address?1:0; ?>;
+		if(set_address!=1){
+			$('#myModal').modal({keyboard: false});
+		}
+		$('.time').datetimepicker({
+	        format: 'yyyy-mm-dd',
+	        language:"zh-CN",
+	        minView:3,
+	        autoclose:true,
+	        startView:2,
+	        todayBtn:true
+    	});
+	});
+	function pay(){
+		$("#order").submit();
+	}
+	$("input[name='agent_cut']").keyup(function(){
+		if(parseInt($(this).val())>parseInt($(this).attr('max'))){
+			alert('超出限额');
+			$(this).val('');
+		}
+	})
+</script>
+</html>

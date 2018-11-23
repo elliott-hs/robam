@@ -1,0 +1,138 @@
+/* CSS Document */
+@charset "utf-8";
+html {
+	height: 100%;
+}
+body {
+	font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;
+	background-color:#f0f0f2;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	font-size: 14px;
+	color: #333333;
+}
+ul, li{
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+.clearfix {
+	float: none;
+	clear: both;
+	font-size: 1px;
+	line-height: 1px;
+	height: 1px;
+}
+.boe_hide{
+	display:none;
+}
+.hui{
+	background:#f8f8f6;
+	color:#FFF;
+}
+.boe_float{
+	float:right;
+}
+.container {
+	padding: 0;
+	width:1080px;
+}
+.row {
+	margin: 0px;
+}
+.col-sm-no{
+	padding-left:0;
+	padding-right:0;
+}
+.col-sm-1,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-10,.col-sm-11,.col-sm-12{
+	padding-left:0;
+	padding-right:0;
+}
+.col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding-right: 0;
+    padding-left: 0;
+}
+/***************************************************************/
+/****head***/
+#lb_head{
+	background-color:#f8f8f8;
+	min-height:45px;
+	line-height:45px;
+}
+.head_title{
+	/*color:#FFF;*/
+	text-align:center;
+	font-size:20px;
+	/*font-weight:bold;*/
+}
+.head_fdj{
+	padding-left:10px;
+}
+.head_fdj img{
+	width:18px;
+	height:23px;
+}
+.head_jia{
+	padding-right:10px;
+	text-align:right;
+}
+.head_jia img{
+	width:18px;
+	height:18px;
+}
+.head_title span{
+	text-align:center;
+}
+
+#lb_nav{
+	background-color:#FFF;
+	height:60px;
+	line-height:20px;
+	border-top:1px solid transparent;
+	border-color: #ddd;
+}
+#lb_nav ul li{
+	width:24%;
+}
+@media (max-width: 1080px) {
+	.container {
+		padding: 0;
+		width:100%;
+	}
+}
+@media (max-width:767px){
+	.container {
+		padding: 0;
+		width:100%;
+	}
+	.fix {
+		position: fixed;
+		width: 100%;
+		left: 0px;
+		top: 0px;
+		z-index: 100;
+	}
+	.lb_fix_bottom{
+		position: fixed;
+		width: 100%;
+		left: 0px;
+		bottom:0px;
+		z-index: 100;
+		border-top: 1px solid #ddd;
+	}
+	#lb_head{
+		min-height:30px;
+		line-height:30px;
+	}
+	#lb_banner{
+		margin-top:30px;
+	}
+	#lb_hot2{
+		margin-bottom:60px;
+	}
+	.head_title{
+		text-align:center;
+		font-size:16px;
+	}
+}

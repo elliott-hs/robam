@@ -1,0 +1,107 @@
+/* CSS Document */
+@charset "utf-8";
+#course_info{
+	font-size:18px;
+	line-height:36px;
+	background-color:#fafafa;
+}
+.course_title{
+	color:#59bcff;
+	text-align:center;
+}
+.course_tag{
+	color:#000;
+	padding-left:20px;
+}
+.course_tag_content{
+	color:#000;
+	font-size:16px;
+	padding-left:45px;
+	padding-right:45px;
+	padding-top:5px;
+	padding-bottom:5px;
+	line-height:25px;
+	min-height:130px;
+}
+.course_tag_img{
+	background:url(../himages/duo2_icon.png) no-repeat ;
+	background-size:90px 182px;
+	background-position:bottom 680px right;
+}
+.course_tag_img2{
+	background:url(../himages/duo_icon.png) no-repeat;
+	background-size:40px 104px;
+}
+.course_tag_img3{
+	background:url(../himages/duo5_icon.png) no-repeat ;
+	background-position:bottom;
+}
+.course_mod_list{
+	padding-left:45px;
+	padding-right:45px;
+}
+.course_mod{
+	background-color: #fff;
+	border: 1px solid transparent;
+	border-radius: 6px;
+	border-color: #ddd;
+	padding-left:45px;
+	padding-top:25px;
+	padding-bottom:20px;
+	font-size:25px;
+	margin-bottom:8px;
+}
+.course_mod span{
+	padding-left:20px;
+}
+
+@media (max-width: 1080px) {
+	
+}
+@media (max-width:767px){
+	.course_tag{
+		padding-left:5px;
+	}
+	/*.course_tag_img{
+		background-size:10px 26px;
+	}*/
+	.course_tag_content{
+		/*padding-left:10px;
+		padding-right:10px;*/
+		font-size:14px;
+	}
+	.course_mod_list{
+		padding-left:10px;
+		padding-right:10px;
+	}
+	.course_mod{
+		font-size:14px;
+		padding-left:10px;
+		padding-top:5px;
+		padding-bottom:5px;
+	}
+	.course_mod span{
+		padding-left:5px;
+	}
+	.course_mod img{
+		width:30px;
+		height:30px;
+	}
+	.course_mod .dianzan{
+		line-height:18px;
+		font-size:12px;
+	}
+	.course_mod .dianzan img{
+		width:18px;
+		height:18px;
+	}
+	.course_tag_img{
+		background-size:80px 120px;
+		background-position:bottom 250px right;
+	}
+	.course_tag_img3{
+		background-size:100% 106px;
+		background-position:bottom;
+	}	
+	
+}

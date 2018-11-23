@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<!-- 临时禁用缓存，避免css缓存 -->
+<title>登录</title>
+<link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__CSS__/base.css" rel="stylesheet">
+<link href="__CSS__/login.css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="fix">
+    <!--head begin 1-->
+    <div id="lb_head" class="row">
+      <div class="col-sm-1 col-xs-2 head_fdj">
+      <a href="{$_SERVER['HTTP_REFERER']}" class="btn btn-default btn-lg" role="button">
+      <i class="glyphicon glyphicon-chevron-left"></i></a>
+      </div>
+      <div class="col-sm-10 col-xs-8 head_title">登录</div>
+      <div class="col-sm-1 col-xs-2 head_jia"></div> 
+    </div>
+    <!--head end 1-->
+  </div> 
+  <!--lb_login begin 2-->
+  <div id="lb_login" class="row lb_pro lb_common">
+        <form class="form-horizontal" role="form" action="__SELF__" method="post"  name="add_address" id="add_address">
+          <div class="form-group">
+            <div class="col-xs-12 col-sm-12 text-center">
+                  <label for="user_name" class="col-xs-2 col-sm-2 control-label">账号：</label>
+                  <div class="col-xs-8 col-sm-6">
+                  <input  type="text" name="username" id="username" class="form-control">
+                  </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 text-center">
+                  <label for="password" class="col-xs-2 col-sm-2 control-label">密码：</label>
+                  <div class="col-xs-8 col-sm-6">
+                  <input  type="password" name="password" id="password" class="form-control">
+                  </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 text-center" style="padding-bottom:10px;">
+                  <div class="col-xs-2 col-sm-2"></div>
+                  <div class="col-xs-4 col-sm-4 text-center">
+                  <button type="submit" class="btn btn-info btn-block">登录</button>
+                  </div>
+            </div>
+            
+          </div>
+        </form> 
+  </div>
+  <!--lb_login end 2-->
+</div>
+</body>
+</html>

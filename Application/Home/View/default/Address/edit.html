@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<!-- 临时禁用缓存，避免css缓存 -->
+<title>收货地址</title>
+<link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__CSS__/base.css" rel="stylesheet">
+<link href="__CSS__/add_address.css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="fix">  
+	<!--head begin 1-->
+	<div id="lb_head" class="row">
+	  <div class="col-sm-1 col-xs-2 head_fdj">
+	  <a href="#" onclick="refer()" class="btn btn-default btn-lg" role="button">
+	  <i class="glyphicon glyphicon-chevron-left"></i></a>
+	  </div>
+	  <div class="col-sm-10 col-xs-8 head_title">{$title}</div>
+	  <div class="col-sm-1 col-xs-2 head_jia">
+		<!--<button type="button" class="btn btn-primary">保存</button>-->
+	  </div> 
+	</div>
+	<!--head end 1-->
+  </div> 
+  <!--lb_add_address begin 2-->
+  <div id="lb_add_address" class="row lb_pro lb_common">
+		<form class="form-horizontal" role="form"  id="form_address">
+		  <div class="form-group">
+			<div class="col-xs-12 col-sm-12 text-center">
+				  <label for="user_name" class="col-xs-2 col-sm-2 control-label">姓名：</label>
+				  <div class="col-xs-6 col-sm-6">
+				  <input  type="text" name="name" id="user_name" class="form-control" placeholder="收货人姓名" value="{$result.name}">
+				  </div>
+			</div>
+			<div class="col-xs-12 col-sm-12 text-center">
+				  <label for="mobile_phone" class="col-xs-2 col-sm-2 control-label">手机：</label>
+				  <div class="col-xs-6 col-sm-6">
+				  <input  type="text" name="phone" id="mobile_phone" class="form-control" placeholder="收货人手机号码" value="{$result.phone}">
+				  </div>
+			</div>
+			<div class="col-xs-12 col-sm-12 text-center">
+				<label for="area" class="col-xs-2 col-sm-2 control-label">区域：</label>
+				<div class="col-xs-6 col-sm-6">
+					 <select name="area" class="form-control">
+                <option value="">请选择</option>
+                 
+              <volist name=":cityList()" id="vo">
+                    <option value="{$vo.area}" <?php if($user['area']==$vo['area']) echo "selected"; ?> >{$vo.area}</option>
+                </volist>
+               </select>  
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 text-center">
+				  <label for="area" class="col-xs-2 col-sm-2 control-label">街道：</label>
+				  <div class="col-xs-8 col-sm-8">
+				  <input  type="text" name="address" id="address" class="form-control" placeholder="路名/写字楼/小区" value="{$result.address}">
+				  </div>
+			</div>
+			<div class="col-xs-12 col-sm-12 text-center" style="padding-bottom:10px;">
+				<div class="col-xs-2 col-sm-2"></div>
+				<div class="col-xs-4 col-sm-4">
+					<button type="button" onclick="save()" class="btn btn-primary btn-block">保存</button>
+				</div>     
+			</div>
+		  </div>
+		  <input type="hidden" name="id" value="{$result.id}">
+		</form> 
+  </div>
+  <!--lb_add_address end 2-->
+</div>
+</body>
+<script type="text/javascript">
+function save(){
+	var b1 = $("input[name='name']");
+	if(b1.val()==''){
+	  alert('填写姓名');
+	  b1.focus();
+	  return '';
+	}
+	var b2 = $("input[name='phone']");
+	if(b2.val()==''){
+	  alert('填写正确手机号码');
+	  b2.focus();
+	  return '';
+	}
+	var b3 = $("input[name='area']");
+	if(b3.val()==''){
+	  alert('填写城市');
+	  b3.focus();
+	  return '';
+	}
+	var b4 = $("input[name='address']");
+	if(b4.val()==''){
+	  alert('填写地址');
+	  b4.focus();
+	  return '';
+	}
+	$.post("{:U('address/ajax_save')}",$("#form_address").serialize(), function(data){
+		if(data){
+			refer();
+		}else{
+			alert('系统异常请重试');
+		}
+
+	})
+}
+function refer(){
+	window.location.href=document.referrer;
+}
+</script>
+</html>

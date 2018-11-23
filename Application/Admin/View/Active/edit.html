@@ -1,0 +1,119 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{$title}</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">标题<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" value="{$active.title}">
+            </div>
+        </div>
+         <div class="form-item">
+            <label class="item-label">类型<span class="check-tips"></span></label>
+            <div class="controls">
+               	<select name="type" style="width:100px;" onchange="change()" id="type" >
+               		<option value="0" <if condition="$active.type eq 0">selected</if> >选择</option>
+					<option value="1" <if condition="$active.type eq 1">selected</if> >一口价</option>
+					<option value="2" <if condition="$active.type eq 2">selected</if> >优惠</option>
+                    <option value="3" <if condition="$active.type eq 3">selected</if> >满减</option>
+				</select>
+            </div>
+        </div>
+         <div class="form-item manjian hidden">
+            <label class="item-label">满<span class="check-tips">购物商品满多少钱</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="price_active" value="">
+            </div>
+            <label class="item-label">减<span class="check-tips">总订单优惠多少钱</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="price_active" value="">
+            </div>
+        </div>
+        <div class="form-item youhui hidden">
+            <label class="item-label">价格|优惠（%）<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="price_active" value="{$active.price_active}">
+            </div>
+        </div>
+        <div class="form-item youhui hidden">
+            <label class="item-label">选择商品<span class="check-tips"></span></label>
+            <div class="controls">
+            	<select  onchange="category(this.options[this.options.selectedIndex].value)">
+					<option value="0">全部</option>
+					<volist name=":goods_category()" id="ca">
+						<option  value="{$ca.id}">{$ca.name}</option>
+					</volist>
+				</select>
+
+            </div>
+            <div class="controls" id="select_items">
+				{$items_selected}
+			</div>
+        </div>
+         <div class="form-item">
+            <label class="item-label">开始时间<span class="check-tips">（不填时间默认长期有效）</span></label>
+            <div class="controls">
+            
+                <input type="text" name="game_start" class="text input-large time" value="{$active.game_start|time_format}" placeholder="活动开始时间">
+            </div>
+        </div>
+         <div class="form-item">
+            <label class="item-label">结束时间<span class="check-tips">（不填时间默认长期有效）</span></label>
+            <div class="controls">
+                <input type="text" name="game_end" class="text input-large time" value="{$active.game_end|time_format}" placeholder="活动开始时间">
+            </div>
+        </div>
+
+        
+        <input type="hidden" name="id" value="{$active.id}">
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+	<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+    $(function(){
+	    $('.time').datetimepicker({
+	        format: 'yyyy-mm-dd hh:ii',
+	        language:"zh-CN",
+	        minView:2,
+	        autoclose:true
+	    });
+	});
+
+
+	function category(v){
+		var active_id = $("input[name='id']").val();
+		$.post("{:U('active/items_selected')}",{"active_id":active_id,"category_id":v,}, function(data){
+			if(data.status==1){
+				$("#select_items").html(data.info);
+			}
+		});
+	}
+   
+    function change(){
+        var opt=$("#type").val();
+        if(opt == 3){
+            $(".youhui").addClass('hidden');
+            $(".manjian").removeClass('hidden');
+        }else{
+            $(".youhui").removeClass('hidden');
+            $(".manjian").addClass('hidden');
+        }
+    }
+
+    //导航高亮
+    highlight_subnav('{:U('Active/price')}');
+    </script>
+</block>

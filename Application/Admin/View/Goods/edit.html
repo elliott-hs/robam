@@ -1,0 +1,163 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<style type="text/css">
+	.attr-color{color:#fff;background-color:#f60;}
+	</style>
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script type="text/javascript" src="__JS__/bootstrap_alert.js"></script>
+	<div class="main-title cf">
+		<h2><if condition="ACTION_NAME eq 'addaction'">新增<else/>编辑</if>商品</h2>
+	</div>
+	<!-- 表单 -->
+	<form id="form" action="{:U('goods/edit')}" method="post" class="form-horizontal">
+		<div class="form-item cf">
+			<label class="item-label">商品名称<span class="check-tips">（输入商品名称）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="goods_name" value="{$data.goods_name}">
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">图片<span class="check-tips">（封面图片）</span></label>
+
+			<div class="controls">
+				<input type="file" id="upload_picture_thumb">
+				<input type="hidden" name="thumb" id="cover_id_thumb" value="{$data['thumb']}"/>
+				<div class="upload-img-box">
+					<notempty name="data['thumb']">
+						<div class="upload-pre-item">
+							<img src="__ROOT__{$data['thumb']}"/>
+						</div>
+					</notempty>
+				</div>
+			</div>
+			<script type="text/javascript">
+								//上传图片
+							    /* 初始化上传插件 */
+								$("#upload_picture_thumb").uploadify({
+							        "height"          : 30,
+							        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+							        "fileObjName"     : "download",
+							        "buttonText"      : "上传图片",
+							        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+							        "width"           : 120,
+							        'removeTimeout'	  : 1,
+							        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+							        "onUploadSuccess" : uploadPicturethumb,
+							        'onFallback' : function() {
+							            alert('未检测到兼容版本的Flash.');
+							        }
+							    });
+								function uploadPicturethumb(file, data){
+							    	var data = $.parseJSON(data);
+							    	var src = '';
+							        if(data.status){
+							        	src = data.url || '__ROOT__' + data.path
+							        	$("#cover_id_thumb").val(src);
+							        	$("#cover_id_thumb").parent().find('.upload-img-box').html(
+							        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+							        	);
+							        } else {
+							        	updateAlert(data.info);
+							        	setTimeout(function(){
+							                $('#top-alert').find('button').click();
+							                $(that).removeClass('disabled').prop('disabled',false);
+							            },1500);
+							        }
+							    }
+								</script>
+		</div>
+
+		<div class="form-item cf">
+			<?php $selected_fuel = explode(',', $data['fuel']);?>
+			<label class="item-label">燃料种类<span class="check-tips">（不选择,表示不区分燃气种类）</span></label>
+			<div class="controls">
+					<volist name=":goods_shop_fuel()" id="vo">
+						<label class="checkbox">
+						  <input type="checkbox" value="{$vo.id}" name="fuel[]"  <?php if(in_array($vo['id'],$selected_fuel)) echo 'checked'; ?> >{$vo['fuel_name']}
+						  </label>
+					</volist>
+
+			</div>
+		</div>
+
+		<div class="form-item cf">
+			<label class="item-label">商品品类<span class="check-tips">（选择商品分类）</span></label>
+			<div class="controls">
+				<select name="category_id">
+					<option value="0">选择</option>
+					<volist name=":goods_category()" id="vo">
+						<option data-rate="{$vo.reward_rate|floatval}" <if condition="$data['category_id'] eq $vo['id']">selected</if> value="{$vo.id}">{$vo.name}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="form-item cf">
+                    <label class="item-label">商品详情<span class="check-tips">商品详情建议使用图片方式上传</span></label>
+                    <div class="controls">
+                        <label class="textarea">
+                                <textarea name="description">{$data.description}</textarea>
+                                {:hook('adminArticleEdit', array('name'=>'description','value'=>$data['description']))}
+                                </label>                 </div>
+                </div>
+
+
+		<div class="form-item">
+            <label class="item-label">商品状态<span class="check-tips"></span></label>
+            <div class="controls">
+                <select name="status">
+                    <option value="0"<if condition="$data['status'] eq 0">selected</if> >下架</option>
+                    <option value="1"<if condition="$data['status'] eq 1">selected</if> >待售</option>
+                    <option value="2" <if condition="$data['status'] eq 2">selected</if> >在售</option>
+                </select>
+            </div>
+        </div>
+
+		<div class="form-item">
+			<input type="hidden" name="goods_id" value="{$data.goods_id}"/>
+			<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+
+</block>
+
+<block name="script">
+
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+$(function(){
+    $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+
+});
+	Think.setValue('type',{$type|default=1});
+    //导航高亮
+    highlight_subnav('{:U('goods/index')}');
+
+$('#submit').click(function(){
+	$('#form').submit();
+});
+
+
+$("[name='category_id']").on("change", function(){
+	$("[name='reward_rate']").val($(this).children('option:selected').attr('data-rate'));
+});
+
+function setGamePrice(){
+	$("#game_id").slideToggle();
+	$("#game_price").slideToggle();
+}
+
+</script>
+</block>

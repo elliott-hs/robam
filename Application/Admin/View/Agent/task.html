@@ -1,0 +1,134 @@
+<extend name="Public/base" />
+<block name="style">
+<style>
+	.task_input{
+		width: 80px;
+		background-color: #FDD49A;
+	}
+	form a{
+		margin-left: 20px;
+	}
+</style>
+</block>
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title cf">
+		<h2>任务指标</h2>
+	</div>
+	<!-- 表单 -->
+	<form id="form" action="{:U('agent/task')}" method="post" class="form-horizontal">
+		<div class="form-item cf">
+			<label class="item-label">第一季度：<a  class="btn" data-id="1">+</a></label>
+			<div class="controls" id="task_1">
+				<laber>指标（元）：</laber>
+				<volist name="task[1]['task']" id="data">
+					<input type="text" class="text task_input" name="data[task1][]" value="{$data}">
+				</volist>
+				 
+			</div>
+			<div class="controls" id="reward_1">
+				<laber>奖励（%）：</laber>
+				<volist name="task[1]['reward']" id="data">
+					<input type="text" class="text task_input" name="data[reward1][]" value="{$data}">
+				</volist>
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">第二季度：<a class="btn" data-id="2">+</a></label>
+			<div class="controls" id="task_2">
+				<laber>指标（元）：</laber>
+				<volist name="task[2]['task']" id="data">
+					<input type="text" class="text task_input" name="data[task2][]" value="{$data}">
+				</volist>
+				 
+			</div>
+			<div class="controls" id="reward_2">
+				<laber>奖励（%）：</laber>
+				<volist name="task[2]['reward']" id="data">
+					<input type="text" class="text task_input" name="data[reward2][]" value="{$data}">
+				</volist>
+			</div>
+
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">第三季度：<a class="btn" data-id="3">+</a></label>
+			<div class="controls" id="task_3">
+				<laber>指标（元）：</laber>
+				<volist name="task[3]['task']" id="data">
+					<input type="text" class="text task_input" name="data[task3][]" value="{$data}">
+				</volist>
+				 
+			</div>
+			<div class="controls" id="reward_3">
+				<laber>奖励（%）：</laber>
+				<volist name="task[3]['reward']" id="data">
+					<input type="text" class="text task_input" name="data[reward3][]" value="{$data}">
+				</volist>
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">第四季度：<a class="btn" data-id="4">+</a></label>
+			<div class="controls" id="task_4">
+				<laber>指标（元）：</laber>
+				<volist name="task[4]['task']" id="data">
+					<input type="text" class="text task_input" name="data[task4][]" value="{$data}">
+				</volist>
+				 
+			</div>
+			<div class="controls" id="reward_4">
+				<laber>奖励（%）：</laber>
+				<volist name="task[4]['reward']" id="data">
+					<input type="text" class="text task_input" name="data[reward4][]" value="{$data}">
+				</volist>
+			</div>
+		</div>
+
+		<div class="form-item cf">
+			<label class="item-label">全年度：<a class="btn" data-id="5">+</a></label>
+			<div class="controls" id="task_5">
+				<laber>指标（元）：</laber>
+				<volist name="task[5]['task']" id="data">
+					<input type="text" class="text task_input" name="data[task5][]" value="{$data}">
+				</volist>
+				 
+			</div>
+			<div class="controls" id="reward_5">
+				<laber>奖励（%）：</laber>
+				<volist name="task[5]['reward']" id="data">
+					<input type="text" class="text task_input" name="data[reward5][]" value="{$data}">
+				</volist>
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="agent_id" value="{:I('agent_id')}"/>
+			<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+
+<block name="script">
+
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" charset="utf-8">
+	Think.setValue('type',{$type|default=1});
+    //导航高亮
+    highlight_subnav('{:U('user/index')}');
+
+
+$('#submit').click(function(){
+	$('#form').submit();
+});
+
+$("a").on('click',function(data) {
+	var id = $(this).attr('data-id');
+	$("#task_"+id).append('<input type="text" class="text task_input" name="data[task'+id+'][]" value="">');
+	$("#reward_"+id).append('<input type="text" class="text task_input" name="data[reward'+id+'][]" value="">');
+ 
+});
+</script>
+</block>

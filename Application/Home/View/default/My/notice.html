@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<!-- 临时禁用缓存，避免css缓存 -->
+<title>系统通知</title>
+<link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__CSS__/base.css" rel="stylesheet">
+<link href="__CSS__/notice.css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="fix">  
+	<!--head begin 1-->
+	<div id="lb_head" class="row">
+	  <div class="col-sm-1 col-xs-2 head_fdj">
+	  <a href="{:U('my/index')}" class="btn btn-default btn-lg" role="button">
+	  <i class="glyphicon glyphicon-chevron-left"></i></a>
+	  </div>
+	  <div class="col-sm-10 col-xs-8 head_title">系统通知</div>
+	  <div class="col-sm-1 col-xs-2 head_jia"></div>
+	</div>
+	<!--head end 1-->
+  </div> 
+  <!--lb_notice begin 2-->
+  <div id="lb_notice" class="row">
+
+	<foreach name="notice" item="vo">
+	<div class="col-sm-12 col-xs-12 text-left lb_pro">
+		<div class="col-sm-12 col-xs-12 text-center" style="background-color:#eee;">
+		{$vo.create_time|date="Y年m月d日 H:i:s",###}</div>
+		<div class="col-sm-12 col-xs-12" data-read="{$vo.is_read}" data-id="{$vo.id}" onclick="show_msg($(this))" <if condition="$vo.is_read eq 0">style="color:red;" </if>>
+		  <i class="glyphicon glyphicon-volume-up"></i> <span>{$vo.title}</span></div>
+		<div class="col-sm-12 col-xs-12 hide"><small>{$vo.msg}</small></div> 
+	</div>
+	</foreach>
+   
+	
+  </div>
+  <!--lb_address end 2-->
+</div>
+<script type="text/javascript">
+  function show_msg(ob){
+	if(ob.attr('data-read')==0){
+	  $.post("{:U('my/ajax_notice_read')}",{'id':ob.attr('data-id')}, function(data){
+	  	if(data){
+	  		ob.css('color','');
+	  		ob.next('div').removeClass('hide');
+	  	}
+	  })
+	}else{
+		ob.next('div').removeClass('hide');
+	}
+	
+  }
+</script>
+</body>
+</html>
+ 

@@ -1,0 +1,64 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{$title}</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">城市：<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="city" value="苏州"  readonly="readonly">
+            </div>
+        </div>
+
+        <div class="form-item">
+            <label class="item-label">区域：<span class="check-tips"></span></label>
+            <div class="controls">
+              <input type="text" class="text input-large" name="area" value="{$city.area}">
+            </div>
+        </div>
+        <div class="form-item">
+            
+            <label class="item-label">送货时间：<span class="check-tips"></span></label>
+            <for start="1" end="8">
+            <div class="controls">
+            	
+					<label class="checkbox"><!-- <input type="checkbox" value="{$i}" name="sends[]" <?php if(in_array($i,$city['sends'])) echo'checked'; ?> > -->周{$i|num_to_string}</label>&nbsp;&nbsp;&nbsp;
+                    <input type="text" name="data[{$i}][start]" class="text input-large time" value="{$city['sends'][$i]['start']}" placeholder="送货开始时间" style="width:180px;">
+                        ~~~
+                    <input type="text" name="data[{$i}][end]" class="text input-large time" value="{$city['sends'][$i]['end']}" placeholder="送货结束时间" style="width:180px;">
+				
+            </div>
+            </for>
+        </div>
+        <input type="hidden" name="id" value="{$city.id}">
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+    $(function(){
+ 
+      $(".time").datetimepicker({
+        format: "hh:ii",
+        autoclose: true,
+        todayBtn: true,
+    
+       minView:0
+    });
+
+});
+        //导航高亮
+        highlight_subnav('{:U('City/index')}');
+    </script>
+</block>

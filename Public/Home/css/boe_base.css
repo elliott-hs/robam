@@ -1,0 +1,313 @@
+/* CSS Document */
+@charset "utf-8";
+html {
+    height: 100%;
+}
+body {
+    font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+    color: #333333;
+    background-color:#FFF;
+}
+.boe_hide{
+    display:none;
+}
+@media (min-width: 1104px) {
+    .boe_container {
+        padding: 0;
+        width: 100% !important;
+    }
+}
+@media (min-width: 1026px) {
+    .boe_container {
+        padding: 0;
+        width: 100% !important;
+    }
+}
+.boe_row {
+    margin: 0px;
+}
+/*.showAppMsg {
+    top: -10000px;
+    display:none;
+}*/
+#appLoadingMsg {
+	display: none;
+	position: fixed;
+	z-index: 10000;
+	height: 66px;
+	margin: auto;
+	white-space: nowrap;
+}
+/*****************************************************************************/
+.col-sm-no{
+    padding-left:0;
+    padding-right:0;
+    margin:0;
+}
+/********************************************************************************/
+/*nav*/
+#boe_nav {
+    background-color: #FFF
+}
+#boe_nav ul, li{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+#boe_nav .clearfix {
+    float: none;
+    clear: both;
+    font-size: 1px;
+    line-height: 1px;
+    height: 1px;
+}
+#boe_nav .clear {
+    clear: both;
+}
+#boe_nav .dropdown a{
+    text-decoration:none;
+}
+#boe_nav .dropdown-menu .badge {
+    background: #000;
+    color: #fff;
+}
+#boe_nav .dropdown-menu .badge {
+    margin:inherit;
+    margin-top:5px;
+    margin-left:10px;
+}
+#boe_nav .glyphicon {
+    color: #FFF !important;
+}
+#boe_nav .nav_top {
+    width: 100%;
+    height: 23px;
+    padding-top: 5px;
+    padding-bottom: 30px;
+    line-height: 14px;
+    background-color: #f8f8f6;
+}
+#boe_nav .nav_drop{
+    background-color: #F0F0F0;
+}
+#boe_nav .nav_top .top_text {
+    padding-left: 25px;
+}
+#boe_nav .nav_logo {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+#boe_nav .nav_menu{
+    width: 100%;
+    background-color:#000;
+    margin-top:5px;
+}
+#boe_nav .kbxx{
+    width:280px !important;
+    color:#FFF !important;
+    background:#4594bc;
+    padding-left:15px !important;
+}
+#boe_nav .img-top{
+    margin-top:10px;
+    width:250px;
+    height:44px;
+}
+#boe_nav .form-space{
+    margin-top:12px;
+    margin-left:93px;
+}
+#boe_nav .boe_btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: none;
+    cursor: pointer;
+    -moz-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+}
+#boe_nav .boe-nav-item {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+    padding-top: 8px;
+    padding-left: 20px;
+    padding-right: 45px;
+    font-weight: 500;
+    color: #cdddeb;
+    /* width: 12%; */
+    font-size: 16px;
+}
+#boe_nav .boe-nav-item:hover,
+#boe_nav .boe-nav-item:focus {
+    color: #fff;
+    text-decoration: none;
+}
+#boe_nav .boe-nav .active {
+    color: #fff;
+}
+#boe_nav .boe-nav .active::after {
+	position: absolute;
+	bottom: 0;
+	left: 30%;
+	width: 0;
+	height: 0;
+	margin-left: -5px;
+	vertical-align: middle;
+	content: " ";
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid;
+	border-left: 5px solid transparent;
+}
+#boe_nav .boe-masthead {
+    background-color: #000;
+    -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+}
+#boe_nav .boe-form-control {
+    border-radius: 0;
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;	
+}
+#boe_nav .btn {
+    border-radius: 0;
+}
+#boe_nav .icon-notice {
+    background-image: url(../images/notice.png);
+    background-repeat: no-repeat;
+    height: 18px;
+}
+#boe_nav .icon-messages {
+    background-image: url(../images/messages.png);
+    background-repeat: no-repeat;
+    width:18px;
+    height: 18px;
+    vertical-align:middle;
+}
+#boe_nav .icon-id {
+    background-image: url(../images/id.png);
+    background-repeat: no-repeat;
+    width:18px;
+    height: 18px;
+    vertical-align:middle;
+}
+#boe_nav .icon-cancel {
+    background-image: url(../images/cancel.png);
+    background-repeat: no-repeat;
+    width:16px;
+    height: 18px;
+    vertical-align:middle;
+}
+#boe_nav .study_text{
+    padding:5px;
+}
+
+/*footer*/
+#boe_footer{
+    padding-top:30px;
+    padding-bottom:30px;
+    background-color: #f8f8f6; 
+}
+/*course/manage button*/
+#navbar .navbar-nav>li>a {
+    background: #00609d;
+    color: #fff !important/*JiangZQ 2016-04-03*/
+}
+#navbar .navbar-nav .glyphicon {
+    color: #fff !important /*JiangZQ 2016-04-03*/
+}
+#navbar .navbar-nav-boe>li>a {
+    background: #00609d;
+    color: #000 !important/*JiangZQ 2016-04-03*/
+}
+#navbar .navbar-nav-boe .glyphicon-boe {
+    color: #000 !important /*JiangZQ 2016-04-03*/
+}
+
+/*wenku icon*/
+#boe_main_dom  .btn .glyphicon{
+    color: #FFF;
+}
+#questionForm .glyphicon{
+    top: .6em !important;
+}
+/*resource*/
+.boe_resource  .glyphicon{
+    line-height: normal !important;
+
+}
+.boe_resource .addNewBtn {
+    width: 100%;
+}
+/*breadcrumb*/
+.breadcrumb{
+    background:none !important;
+}
+
+.modals.dimmer .ui.scrolling.modal.absmodal {
+	margin: 3.5rem 19px 1.5rem 2% !important;
+}
+
+@media (max-width:767px){
+    #boe_nav{
+        display:none;
+    }
+    #boe_min_nav{
+        display:block;
+    }
+    #boe_min_nav .min_top{
+        background:#337AB7;
+        line-height:30px;
+        vertical-align:middle;
+    }
+    #boe_min_nav .btn-primary2{
+        border-color:#337AB7;
+        padding-left:2px;
+        padding-right:2px;
+    }
+    #boe_min_nav .btn-lg2{
+        font-size: 14px;
+        padding: 5px 5px;
+        min-width:95px;
+        margin-top:5px;
+        margin-bottom:10px;
+    }
+    #boe_min_nav .min_logo{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    #boe_min_nav .min_kbxx{
+        min-width:110px;
+    }
+    #boe_min_nav .glyphicon {
+        color: inherit !important;
+    }
+	/*xinpeng 2016-09-12*/
+	.modals.dimmer .ui.scrolling.modal.absmodal {
+		margin: 3.5rem 19px 1.5rem 2% !important;
+	}
+}

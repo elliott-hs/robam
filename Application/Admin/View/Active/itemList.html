@@ -1,0 +1,91 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>{$title}</h2>
+	</div>
+	<div class="cf">
+		<div class="fl">
+            <a class="btn" href="{:U('Active/editItem')}">新 增</a>
+             
+        </div>
+        <button class="btn ajax-post confirm" url="{:U('Active/changeStatus')}" target-form="ids">删 除</button>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table table-striped">
+	<table class="">
+    <thead>
+        <tr>
+		<th  class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th>标题</th>
+		<th>活动类型</th>
+		<th>价格描述</th>
+		<th>开始时间</th>
+		<th>结束时间</th>
+		<th>操作</th>
+		</tr>
+    </thead>
+    <tbody>
+		<notempty name="_list">
+		<volist name="_list" id="vo">
+		<tr>
+            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
+            <td>{$vo.title}</td>
+			<td><?php if($vo['type']==1) echo "一口价"; elseif($vo['type']==2) echo "打折"; ?></td>
+			<td style="color:green;">
+				<if condition="$vo['type'] eq 1">
+					￥{$vo.price_active|floatval}
+				<elseif condition="$vo['type'] eq 2"/>
+ 					{$vo.price_active|floatval}%
+				<else />
+				
+				</if>
+			</td>
+ 			<td>{$vo.game_start|time_format}</td>
+ 			<td>{$vo.game_end|time_format}</td>
+			<td>
+				<a href="{:U('Active/editItem',array('id'=>$vo['id']))}">修改</a>
+
+            </td>
+		</tr>
+		</volist>
+		<else/>
+		<td colspan="9" class="text-center"> aOh! 暂时还没有内容! </td>
+		</notempty>
+	</tbody>
+    </table>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+	<script type="text/javascript">
+	//搜索功能
+	$("#search").click(function(){
+		var url = $(this).attr('url');
+        var query  = $('.search-form').find('input').serialize();
+        query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+        query = query.replace(/^&/g,'');
+        if( url.indexOf('?')>0 ){
+            url += '&' + query;
+        }else{
+            url += '?' + query;
+        }
+		window.location.href = url;
+	});
+	//回车搜索
+	$(".search-input").keyup(function(e){
+		if(e.keyCode === 13){
+			$("#search").click();
+			return false;
+		}
+	});
+    //导航高亮
+    highlight_subnav('{:U('User/index')}');
+	</script>
+</block>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<!-- 临时禁用缓存，避免css缓存 -->
+<title>地址列表</title>
+<link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__CSS__/base.css" rel="stylesheet">
+<link href="__CSS__/address.css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="fix">  
+	<!--head begin 1-->
+	<div id="lb_head" class="row">
+	  <div class="col-sm-1 col-xs-2 head_fdj">
+	  <a href="{:U('order/index',array('order_id'=>session('order_id')))}" class="btn btn-default btn-lg" role="button">
+	  <i class="glyphicon glyphicon-chevron-left"></i></a>
+	  </div>
+	  <div class="col-sm-10 col-xs-8 head_title">收货地址管理</div>
+	  <div class="col-sm-1 col-xs-2 head_jia">
+	  <a href="{:U('Address/edit')}" class="btn btn-info" role="button">新增</a></div> 
+	</div>
+	<!--head end 1-->
+  </div> 
+  <!--lb_address begin 2-->
+  <foreach name="list" item="vo">
+  <div id="lb_address" class="row">
+	<div class="col-sm-12 col-xs-12 text-left lb_pro">
+		<div class="col-sm-12 col-xs-12">
+		<div class="col-sm-6 col-xs-6">
+		   <strong style="font-size:16px">{$vo.name}</strong>
+		</div>
+		<div class="col-sm-6 col-xs-6 text-right">
+		   {$vo.phone}
+		</div>
+		 
+		 
+	  </div>
+	  <div class="col-sm-12 col-xs-12">{$vo.address}</div> 
+	  <div class="col-sm-12 col-xs-12">
+		<if condition="$vo['is_default'] eq 1">
+		  <div class="col-sm-6 col-xs-6" style="color:red;">
+			  <i class="glyphicon glyphicon-heart-empty"></i><span style="margin-left:10px;">默认地址</span>
+		  </div>
+		 <else />
+		  <div class="col-sm-6 col-xs-6" onclick="set_default({$vo.id})">
+			  <i class="glyphicon glyphicon-unchecked"></i><span style="margin-left:10px;">设为默认</span>
+		  </div>
+		</if>
+		<div class="col-sm-6 col-xs-6 text-right">
+			<a href="{:U('address/edit',array('id'=>$vo['id']))}" class="btn btn-info btn-sm" role="button">
+		  编辑</a>
+		  <a href="{:U('address/del',array('id'=>$vo['id']))}" class="btn btn-danger btn-sm" role="button">
+		  删除</a>
+		</div>
+		 
+	  </div>
+	</div>
+  </foreach>
+  </div>
+  <!--lb_address end 2-->
+</div>
+</body>
+<script type="text/javascript">
+	function set_default(id){
+		$.post("{:U('address/ajax_setDefault')}",{id:id}, function(data){
+	 		if(data){
+	 			window.location.href="{:U('address/index')}";
+	 		}else{
+	 			alert('系统异常请重试');
+	 		}
+		})
+  	}
+</script>
+</html>

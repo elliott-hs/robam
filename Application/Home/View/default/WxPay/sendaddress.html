@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>支付</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" href="__CSS__/sm.min.css">
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css">
+        <link rel="stylesheet" type="text/css" href="__CSS__/address.css">
+        <link rel="stylesheet" type="text/css" href="__CSS__/ui-bar.css">
+        <link rel="stylesheet" type="text/css" href="__CSS__/order.css">
+        <style type="text/css">
+        .picker-items{
+            font-size: 1rem
+        }
+        .busi-desc .bd .tips {padding-top: 5px;}
+        </style>
+	</head>
+	<body class="layout">
+		<div>
+			<!-- 已选订单详情 Start-->
+			<div class="busi-desc bg-white">
+                <img src="__IMG__/sendsampledefault.png" class="img-logo">
+                <div class="bd">
+                    <h4>窗帘小样</h4>
+                    <p class="lineclamp "> {$info.samples_title}</p>
+                    <div class="tips">
+                        <span class="c2 fs18">¥{$info['money']+$info['courier_money']}</span>
+                        <span class="fright c1">×<?php echo count(explode(',',$info['samples_title']))?></span>
+                    </div>
+                </div>
+			</div>
+            <div class="edit_address bg-white ">
+                <!-- 填写地址 Start-->
+                <div class="form hide" id="uncomplete">
+                    <p><label>联系人：&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" id="name" placeholder="您的姓名"/>
+                    </p>
+                    <p><label>收货地址：</label>
+                        <input type="text" id="city-picker" placeholder="请选择省市区域" value=""/><span></span>
+                    </p>
+                    <p><label>门牌号：&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" id="address" placeholder="请输入门牌号等详细信息"/>
+                    </p>
+                    <p><label>手机号：&nbsp;&nbsp;&nbsp;</label>
+                        <input type="tel" id="tel" maxlength="11" placeholder="方便送货人员联系您的电话"/>
+                    </p><br/>
+                    <div class="foot_buy ta-center " id="submit">保存</div><br>
+                </div>
+                <!-- 填写地址 End-->
+                <!-- 显示地址 Start-->
+                <notempty name="addressInfo">
+                <div class="edit_address bg-white  ">
+                    <!-- 显示地址 Start-->
+                    <div class="form mt-15 " id="complete">
+                        <div class="f_address">
+                            <div>
+                               <i id="delete"></i><label>×</label>
+                                <div>
+                                    <p class="fleft" id="form_name">{$addressInfo.consignee_name}</p>
+                                    <p class="ta-right" id="form_tel">{$addressInfo.consignee_phone}</p>
+                                </div>
+                                <div  id="form_area">{$addressInfo.consignee_address}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 显示地址 End-->
+                </div>
+                </notempty>
+                <!-- 显示地址 End-->
+            </div>
+			<div class="add_address bg-white mt-15"> + 点击添加收货地址</div>
+			<!-- 已选订单详情 End-->
+           <div class="fixed_buy">
+                   <p class="total">合计：¥<span>{$info['money']+$info['courier_money']}</span></p>
+                <p class="topay">去支付</p>
+            </div>
+            <div class="content-block-title">备注</div>
+		        <div class="list-block">
+		        	<p class="mark"><textarea class="" id="remark"></textarea></p>
+		        </div>
+		</div>
+     <include file="Public:share" />  
+	</body>
+    <script charset="utf-8" type="text/javascript" src="__JS__/jquery-2.1.4.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="__JS__/util.js"></script>
+    <script type="text/javascript">
+    	var address = "{$_GET['addressid']}";
+		
+		$("#delete").click(function(){
+			$(".edit_address").addClass('hide');
+			address = '';
+			$(".add_address").removeClass('hide');
+		})
+		if(address){
+			$(".add_address").addClass('hide');
+		}
+		
+		$(".add_address").click(function(){
+				Util.ajax({
+					method: 'post',
+					data: 'order_id={$info.order_id}&redirect_url=WxPay/samplesAddress?orderid={$info.order_id}&method=samplesWxPay',
+					url: '__ROOT__/wechat.php/WxPay/wxpay'
+				},
+				function(json) {
+					//alert(json.address_url);
+					if(json.status == 0){
+						Util.info('数据获取异常~');
+					}else{
+						calleditAddress(json);
+					}
+					
+				});
+		})
+
+		function  pay(orderid){
+			Util.ajax({
+					method: 'post',
+					data: 'order_id='+orderid+'&method=samplesWxPay',
+					url: '__ROOT__/wechat.php/WxPay/wxpay'
+				},
+				function(json) {
+					calljsApiCall(json);
+				});
+		}
+		
+		$(".topay").click(function(){
+			var remark = $("#remark").val();
+			if(address){
+				Util.ajax({
+					method:'post',
+					data:'remark='+remark+'&orderid={$info.order_id}',
+					url:'__ROOT__/sendsample.php/Samples/ajaxUpdateOrder'},
+					function(json) {
+						if(json.status > 0){
+							pay("{$info.order_id}");
+						}else{
+							Util.info(json.info);
+						}
+				});
+				
+			}else{
+				Util.info("请添加收货地址~");
+			}
+			
+		})
+    </script>
+</html>

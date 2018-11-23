@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<!-- 临时禁用缓存，避免css缓存 -->
+<title>我的订单</title>
+<link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__CSS__/base.css" rel="stylesheet">
+<link href="__CSS__/order.css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="fix">
+	<!--head begin 1-->
+	<div id="lb_head" class="row">
+	  <div class="col-sm-1 col-xs-2 head_fdj">
+	  <a href="{:U('my/index')}" class="btn btn-default btn-lg" role="button">
+	  <i class="glyphicon glyphicon-chevron-left"></i></a>
+	  </div>
+	  <div class="col-sm-10 col-xs-8 head_title"><a href="#">我的订单</a></div>
+	  <div class="col-sm-1 col-xs-2 head_jia"></div>
+	</div>
+	<!--head end 1-->
+  </div>
+  <!--lb_type begin 2-->
+  <div id="lb_type" class="row lb_pro lb_common">
+	<div class="col-sm-4 col-xs-4 text-center">
+		<div  class="user_name">
+			<a href="{:U('order/my')}">全部</a>
+		</div>
+	</div>
+	<div class="col-sm-4 col-xs-4 text-center">
+		<div  class="user_name">
+			<a href="{:U('order/my',array('status'=>3))}">已完成</a>
+		</div>
+	</div>
+	<div class="col-sm-4 col-xs-4 text-center">
+		<div  class="user_name">
+			<a href="{:U('order/my',array('status'=>1))}">未完成</a>
+		</div>
+	</div>
+  </div>
+  <!--lb_task end 2-->
+  <!--lb_order begin 3-->
+  <foreach name="orders" item="item">
+  <div id="lb_order" class="row lb_pro lb_common" style="padding-left:10px;">
+
+	<div class="col-sm-12 col-xs-12 text-left">
+		订单号：{$item.order_id}
+	</div>
+	<!-- <div class="col-sm-8 col-xs-8 text-left">
+		时间：{$item.create_time|date="YmdH:i",###}
+	</div> -->
+	<div class="col-sm-5 col-xs-5 text-left" >
+		订单状态：{$item.status|order_status}
+	</div>
+
+
+
+	<div class="col-sm-6 col-xs-6 text-left" >
+		付款方式：{$item.pay_type|pay_status}
+	</div>
+	<div class="col-sm-6 col-xs-6" >
+			客户：{$item.address.name}
+	</div>
+	<div class="col-sm-6 col-xs-6" >
+			电话号码：{$item.address.phone}
+	</div>
+	<!-- <div class="col-sm-12 col-xs-12" >
+			邮寄地址：{$item.address.area}{$item.address.address}
+	</div> -->
+
+	<?php  $order_nums =0;?>
+	<foreach name="item.details" item="vo">
+	<div class="col-sm-12 col-xs-12 text-left" style="border-bottom:1px solid transparent;
+border-color: #ddd;">
+
+	 	</div>
+		<?php  $order_nums +=$vo['sell_num']?>
+		<div class="col-sm-12 col-xs-12" >
+		<a href="{:U('goods/item',array('id'=>$vo['goods_id']))}">
+			<div class="col-sm-12 col-xs-3" >
+				<img  style="width: 80px;margin-top: 10px;"  src="{$vo.thumb}">
+			</div>
+			<div class="col-sm-12 col-xs-1">
+			</div>
+			<div class="col-sm-12 col-xs-8">
+				{$vo.goods_name}
+			</div>
+		</a>
+		</div>
+
+		<div class="col-sm-12 col-xs-12" >
+
+			<div class="col-sm-6 col-xs-6" >
+				单价：<font color="#FF0000">¥ {$vo.unit_price|floatval}</font>
+			</div>
+
+
+			<div class="col-sm-3 col-xs-3" >
+				<i class="glyphicon glyphicon-remove"></i> {$vo.sell_num}
+			</div>
+
+			<if condition="$item.status eq 3">
+			<div class="col-sm-3 col-xs-3" >
+				<span  style="color:green" class="glyphicon glyphicon-fire" aria-hidden="true">：{$vo.reward_money|floatval}</span>
+			</div>
+			</if>
+		</div>
+
+	 	<div class="col-sm-12 col-xs-12 text-left" style="border-bottom:1px solid transparent;
+border-color: #ddd;">
+
+	 	</div>
+	</foreach>
+
+
+	<div class="col-sm-12 col-xs-12 text-left" >
+
+		<div class="col-sm-2 col-xs-2 text-left" >
+			共 {$order_nums} 件
+		</div>
+		<div class="col-sm-4 col-xs-4 text-left" >
+			总价：<font color="#FF0000">¥ {$item.price_order|floatval}</font>
+		</div>
+
+			<div class="col-sm-3 col-xs-3 text-left" >
+				<if condition="$item.status eq 3">
+					<button type="button" class="btn btn-sm btn-success">订单完成</button>
+					<span  style="color:green" class="glyphicon glyphicon-fire" aria-hidden="true">：{$item.reward_money|floatval}</span>
+				<elseif condition="$item.status eq 2" />
+					<span>等待发货</span>
+					<!-- <button type="button" class="btn btn-sm btn-danger">退货</button> -->
+				<elseif condition="$item.status eq 1" />
+					<if condition="$item.pay_type eq 0">
+						<span>等待发货</span>
+						<!-- <button type="button" class="btn btn-sm btn-danger">退货</button> -->
+					<else />
+						<button type="button" class="btn btn-sm btn-danger">立刻付款</button>
+					</if>
+				<else />
+				</if>
+			</div>
+
+	</div>
+  </div>
+</foreach>
+</div>
+</body>
+</html>

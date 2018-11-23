@@ -1,0 +1,108 @@
+<extend name="Public/base"/>
+<block name="style">
+    <style type="text/css">
+    .cat_name{
+        background-color: #00CC5B;
+    }
+    </style>
+</block>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{$title}</h2>
+    </div>
+    <form action="{:U('active/update')}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">活动名称<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" value="{$active.title}">
+            </div>
+        </div>
+         <div class="form-item">
+            <label class="item-label">开始时间<span class="check-tips">（不填时间默认长期有效）</span></label>
+            <div class="controls">
+            
+                <input type="text" name="game_start" class="text input-large time" value="{$active.game_start|time_format}" placeholder="活动开始时间">
+            </div>
+        </div>
+         <div class="form-item">
+            <label class="item-label">结束时间<span class="check-tips">（不填时间默认长期有效）</span></label>
+            <div class="controls">
+                <input type="text" name="game_end" class="text input-large time" value="{$active.game_end|time_format}" placeholder="活动开始时间">
+            </div>
+        </div>
+         <div class="form-item">
+            <label class="item-label">活动类型<span class="check-tips"></span></label>
+            <div class="controls">
+                <label class="inline radio"><input type="radio" name="type" value="4"  checked>满减</  
+            </div>
+        </div>
+         
+        <div class="form-item">
+            <label class="item-label">满<span class="check-tips">（购物商品满多少钱）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="price_active[]" value="">
+            </div>
+            <label class="item-label">减<span class="check-tips">（总订单优惠多少钱）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="price_active[]" value="">
+            </div>
+        </div>
+        
+        <input type="hidden" name="id" value="{$active.id}">
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+    $(function(){
+        $('.time').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            language:"zh-CN",
+            minView:2,
+            autoclose:true
+        });
+    });
+    //全选
+    $("#selectAll").on("click", function(){ 
+        var v = $(this).val();
+        var obj = $(this)
+         if($(this).attr('checked')){
+            $(this).removeAttr('checked');
+            $("#category_"+v+" input[name='item[]'").each(function(){
+                $(this).removeAttr('checked');
+            })
+    
+        }else{
+            $(this).attr('checked','checked');
+            $("#category_"+v+" input[name='item[]'").each(function(){
+                $(this).prop("checked",!!obj.prop("checked"));
+            })
+        }
+    });
+    //目录选择
+    $(".cat_name").on("click", function(){ 
+        $("#selectAll").removeAttr('checked');
+        var v = $(this).attr('data');
+        if(v>0){
+            $(".item").addClass('hidden');
+            $("#category_"+v).removeClass('hidden');
+        }else{
+            $(".item").removeClass('hidden');
+        }
+        $("#selectAll").val(v);
+    })
+     
+    //导航高亮
+    highlight_subnav('{:U('Active/item')}');
+    </script>
+</block>

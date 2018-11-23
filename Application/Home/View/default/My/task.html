@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<!-- 临时禁用缓存，避免css缓存 -->
+<title>我的任务</title>
+<link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__CSS__/base.css" rel="stylesheet">
+<link href="__CSS__/task.css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="fix">  
+	<!--head begin 1-->
+	<div id="lb_head" class="row">
+	  <div class="col-sm-1 col-xs-2 head_fdj">
+	  <a href="{:U('my/index')}" class="btn btn-default btn-lg" role="button">
+	  <i class="glyphicon glyphicon-chevron-left"></i></a>
+	  </div>
+	  <div class="col-sm-10 col-xs-8 head_title">我的任务</div>
+	  <div class="col-sm-1 col-xs-2 head_jia"></div> 
+	</div>
+	<!--head end 1-->
+  </div> 
+  <!--lb_type begin 2-->
+  <div id="lb_type" class="row lb_pro lb_common">
+		
+		<div class="col-md-12">
+		  <table class="table">
+			<thead>
+			  <tr>
+				<th>季度</th>
+				<th style='color:red;'>任务</th>
+				<th style='color:green;'>销售</th>
+				<th style='color:green;'>返利</th>
+				<th style='color:blue;'>进度(%)</th>
+				<th style='color:blue;'>奖励</th>
+			  </tr>
+			</thead>
+			<tbody>
+			 	<foreach name="seasons" item="vo">
+			 		<?php $tmp_task +=$vo['task'];?>
+			 		<?php $tmp_price_order +=$vo['price_order'];?>
+			 		<?php $tmp_reward +=$vo['reward'];?>
+			 		<?php $tmp_task_reward +=$vo['task_reward'];?>
+				  <tr>
+					<td>{$vo.season}</td>
+					<td style='color:red;'>{$vo.task|floatval}</td>
+					<td style='color:green;'>{$vo.price_order|floatval}</td>
+					<td style='color:green;'>{$vo.reward|floatval}</td>
+					<td style='width:100px;'><div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style=" width: {$vo.rate}%;">
+    <span style="color:#080808;">{$vo.rate|floatval}</span>
+  </div>
+</div></td>
+					<td style='color:blue;'>{$vo.task_reward|floatval}</td>
+				  </tr>
+				</foreach>
+			  
+			  
+			  
+			  <tr >
+				<td>总计</td>
+				<td style='color:red;'>{$tmp_task}</td>
+				<td style='color:green;'>{$tmp_price_order}</td>
+				<td style='color:green;'>{$tmp_reward}</td>
+				<td style='color:blue;'><?php $tmp = ($tmp_price_order/$tmp_task)*100;
+					echo floatval(sprintf("%.2f",$tmp))?></td>
+				<td style='color:blue;'>{$tmp_task_reward}</td>
+			  </tr>
+			</tbody>
+		  </table>
+		</div> 
+  </div>
+  <!--lb_task end 2-->
+</div>
+</body>
+</html>
+ 

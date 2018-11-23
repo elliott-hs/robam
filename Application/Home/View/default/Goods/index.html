@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<!-- 临时禁用缓存，避免css缓存 -->
+<title>分类列表</title>
+<link href="__CSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__CSS__/base.css" rel="stylesheet">
+<link href="__CSS__/category.css" rel="stylesheet">
+<script src="__JS__/jquery.min.js"></script>
+<script src="__JS__/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <!--head begin 1-->
+  <div class="fix">  
+    <div id="lb_head" class="row">
+      <ul class="nav nav-pills text-center" role="tablist" >
+        <li role="presentation">
+        	<a href="{:U('',array('id'=>$vo['id']))}">全部</a></li>
+        <foreach name="category" item="vo" >
+            <li role="presentation">
+        	   <a href="{:U('',array('id'=>$vo['id']))}">{$vo.name}</a></li>
+            <li role="presentation">
+        </foreach>
+      </ul> 
+    </div>
+  </div>
+  <!--head end 1-->
+  <!--lb_search begin 2-->
+  <div id="lb_search" class="row">
+     <form class="form-horizontal" role="form" action="{:U('')}" method="post"  name="product_search" id="product_search">
+        <div class="form-group">
+          <div class="col-xs-1 col-sm-2 text-center"></div>
+          <div class="col-xs-8 col-sm-7 text-center">
+              <div class="input-group">
+                <div class="input-group-addon">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </div>
+                <input type="text" class="form-control" id="lb_keyword" name="search" value="{$search}" placeholder="请输入关键词">
+              </div>
+          </div>
+          <div class="col-xs-2 col-sm-2" style="">
+                <button type="submit" class="btn btn-primary">搜索</button>  
+          </div>
+          <div class="col-xs-1 col-sm-1"></div>  
+        </div>
+      </form>
+  </div>
+  <!--lb_search end 2-->
+   <!--lb_pro begin 4-->
+  <div id="lb_pro" class="row" style="margin:10px 0px 0px 10px;">
+    <foreach name="goods" item="vo" >
+        <div class="col-sm-6 col-xs-6 text-center pro_mar" >
+        	<a href="{:U('goods/item',array('id'=>$vo['goods_id']))}">
+            <div class="pro_bg" style="margin-right:10px;">
+              <img style="margin-top:5px;height: 82px;width: 120px;" src="{$vo.thumb}"/>
+            </div>
+            <div class="pro_bg pro_title" style="margin-right:10px;padding-right:8px;padding-left:8px;padding-top:5px;">
+            	{$vo.goods_name}<br>
+                <font color="#FF0000">¥ {$vo.price_sales}</font>
+            </div>
+            </a>
+        </div>
+    </foreach>   
+  </div>
+  <!--lb_pro end 4-->
+  <!--lb_nav begin 6-->
+  <include file="Public/footer"/>
+  <!--lb_nav end 6-->
+</div>
+</body>
+</html>
+<script src="__JS__/ie10-viewport-bug-workaround.js"></script>

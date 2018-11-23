@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>支付订金</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" href="__CSS__/sm.min.css">
+		<link rel="stylesheet" type="text/css" href="__CSS__/common.css">
+        <link rel="stylesheet" type="text/css" href="__CSS__/address.css">
+        <link rel="stylesheet" type="text/css" href="__CSS__/ui-bar.css">
+        <style type="text/css">
+        .picker-items{
+            font-size: 1rem
+        }
+        </style>
+	</head>
+	<body class="layout">
+		<div>
+			<!-- 已选订单详情 Start-->
+			<div class="busi-desc bg-white">
+                <img src="{$Think.config.UPLOADS_PATH}{$info.thumb}" class="img-logo">
+                <div class="bd">
+                    <h4>{$info.goods_name}</h4>
+                    <p>尺码:{$info.size_name}&nbsp;,&nbsp;布料:{$info.cloth_name}&nbsp;,&nbsp;颜色:{$info.color_name} </p>
+                    <div class="tips">
+                        <span class="c2 fs18">¥{$info.unit_price}</span>
+                        <span class="fright c1">×{$info.sell_num}</span>
+                    </div>
+                </div>
+			</div>
+            <notempty name="addressInfo">
+            <div class="edit_address bg-white  ">
+				<!-- 显示地址 Start-->
+				<div class="form mt-15 " id="complete">
+					<div class="f_address">
+						<div>
+                           <i id="delete"></i><label>×</label>
+                            <div>
+                                <p class="fleft" id="form_name">{$addressInfo.consignee_name}</p>
+                                <p class="ta-right" id="form_tel">{$addressInfo.consignee_phone}</p>
+                            </div>
+                            <div  id="form_area">{$addressInfo.consignee_address}</div>
+                        </div>
+					</div>
+				</div>
+				<!-- 显示地址 End-->
+			</div>
+            </notempty>
+			<!--<a href="__APP__/Address/index?redirect_url=/Orders/address?orderid={$info.order_id}"><div class="add_address bg-white mt-15"> + 点击添加收货地址</div></a>-->
+            <div class="add_address bg-white mt-15"> + 点击添加收货地址</div>
+			<!-- 已选订单详情 End-->
+			
+           <div class="fixed_buy">
+                <p class="total">订金：¥<span>{$info.pre_money}</span></p>
+                <p class="topay">去支付<i class="smtri"></i></p>
+            </div>
+		</div>
+	</body>
+    <include file="Public:share" />
+
+    <script charset="utf-8" type="text/javascript" src="__JS__/jquery-2.1.4.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="__JS__/util.js"></script>
+	
+    <script type="text/javascript">
+		var address = "{$_GET['addressid']}";
+		$("#delete").click(function(){
+			$(".edit_address").addClass('hide');
+			address = '';
+			$(".add_address").removeClass('hide');
+		})
+		if(address){
+			$(".add_address").addClass('hide');
+		}
+		$(".add_address").click(function(){
+			
+				Util.ajax({
+					method: 'post',
+					data: 'order_id={$info.order_id}&paytype=1&redirect_url=WxPay/address?orderid={$info.order_id}&method=groupsWxpay',
+					url: '__ROOT__/wechat.php/WxPay/wxpay'
+				},
+				function(json) {
+					if(json.status == 0){
+						Util.info('数据获取异常~');
+					}else{
+						calleditAddress(json);
+					}
+					
+				});
+		})
+		$(".topay").click(function(){
+			if(address){
+				Util.ajax({
+					method: 'post',
+					data: 'order_id={$info.order_id}&paytype=1&method=groupsWxpay',
+					url: '__ROOT__/wechat.php/WxPay/wxpay'
+				},
+				function(json) {
+					calljsApiCall(json);
+				});
+					
+			}else{
+				Util.info("请添加收货地址~");
+			}
+			
+		})
+
+        
+    </script>
+</html>

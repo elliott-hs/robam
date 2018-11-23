@@ -1,0 +1,112 @@
+/* CSS Document */
+@charset "utf-8";
+#lb_head{
+	background-color:#f8f8f8;
+	min-height:45px;
+	line-height:45px;
+}
+.head_title{
+	/*color:#FFF;*/
+	text-align:center;
+	font-size:20px;
+	/*font-weight:bold;*/
+}
+/******lb_user******/
+#lb_user{
+	margin-top:10px;
+	margin-bottom:10px;
+	height:100px;
+	line-height:100px;
+}
+#lb_user img{
+	width:80px;
+	height:80px;
+}
+#lb_user .btn{
+	border-radius: 0;
+}
+#lb_user .user_name{
+	font-size:18px;
+}
+/*******lb_task**********/
+.lb_common{
+	margin-bottom:10px;
+	height:60px;
+	line-height:60px;
+}
+.lb_common .user_name{
+	font-size:16px;
+}
+.lb_pro{
+	background-color:#FFF;
+	min-height:33px;
+	border: 1px solid transparent;
+	border-color: #ddd;
+}
+.pro_title{
+	/*color:#59bcff;*/
+	text-align:center;
+	font-size:18px;
+	line-height:26px;
+}
+.pro_title2{
+	/*color:#59bcff;*/
+	text-align:center;
+	font-size:18px;
+	line-height:36px;
+}
+/************************/
+#lb_star_pro{
+	/*background-color:#f0f0f2;*/
+}
+.pro_bg{
+	background-color:#FFF;
+}
+#lb_star_pro img{
+	width:371px;
+	height:371px;
+}
+.hot_bg{
+	background-color:#f0f0f2;
+}
+.hot_pro_bg{
+	
+}
+.hot_mar{
+	margin-top:10px;
+}
+.hot_pro2 img{
+	width:359px;
+	height:515px;
+}
+.hot_pro3 img{
+	width:250px;
+	height:173px;
+}
+#lb_nav{
+	margin-top:10px;
+}
+@media (max-width: 1080px) {
+	
+}
+@media (max-width:767px){
+	.head_title{
+		text-align:center;
+		font-size:16px;
+	}
+	.pro_title{
+		font-size:10px;
+		line-height:12px;
+	}
+	.pro_title2{
+		font-size:14px;
+	}
+	#lb_user{
+		margin-top:50px;
+	}
+	#lb_user img{
+		width:50px;
+		height:50px;
+	}
+	
+}

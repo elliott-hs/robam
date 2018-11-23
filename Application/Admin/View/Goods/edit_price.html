@@ -1,0 +1,121 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<style type="text/css">
+	.attr-color{color:#fff;background-color:#f60;}
+	</style>
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script type="text/javascript" src="__JS__/bootstrap_alert.js"></script>
+	<div class="main-title cf">
+
+	</div>
+	<!-- 表单 -->
+	<form id="form" action="{:U('')}" method="post" class="form-horizontal">
+		<div class="form-item cf">
+			<label class="item-label">商品名称：<span class="check-tips">{$data.goods_name}</span></label>
+			<div class="controls">
+
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">图片<span class="check-tips">（封面图片）</span></label>
+
+			<div class="controls">
+
+				<div class="upload-img-box">
+					<notempty name="data['thumb']">
+						<div class="upload-pre-item">
+							<img src="__ROOT__{$data['thumb']}"/>
+						</div>
+					</notempty>
+				</div>
+			</div>
+
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">市场价<span class="check-tips">（输入市场价）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="price_market" value="{$data.price_market}">
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">销售价格<span class="check-tips">（输入销售价）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="price_sales" value="{$data.price_sales}">
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">活动价格<span class="check-tips">&nbsp;&nbsp;&nbsp;<input type="button" class="btn attr-btn" data-toggle="modal" onclick="setGamePrice()" value="设&nbsp;置"></span></label>
+
+			<div class='controls <?php if(!$data['game']) echo 'hidden'; ?>' style="margin-left:30px;margin-top:10px;" id="game_id">
+		 		时间：<input type="text" name="game_start" class="text input-large time" value="{$data.game_start}" placeholder="活动开始时间" style="width:180px;">~~<input type="text" name="game_end" class="text input-large time" value="{$data.game_end}" placeholder="活动结束时间" style="width:180px;">（活动时间必须设置）
+
+			</div>
+			<div class='controls <?php if(!$data['game']) echo 'hidden'; ?>' style="margin-left:30px;" id="game_price">
+		 		价格：<input type="text" class="text input-large" name="price_game" value="{$data.price_game}">（活动价格必须设置）
+			</div>
+
+		</div>
+
+
+
+
+		<div class="form-item cf">
+			<label class="item-label">提成比例<span class="check-tips">（%）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="reward_rate" value="{$data.reward_rate|floatval}">
+			</div>
+		</div>
+
+
+
+
+
+		<div class="form-item">
+			<input type="hidden" name="goods_id" value="{$data.goods_id}"/>
+			<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+
+</block>
+
+<block name="script">
+
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+$(function(){
+    $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+
+});
+	Think.setValue('type',{$type|default=1});
+    //导航高亮
+    highlight_subnav('{:U('goods/index')}');
+
+$('#submit').click(function(){
+	$('#form').submit();
+});
+
+
+$("[name='category_id']").on("change", function(){
+	$("[name='reward_rate']").val($(this).children('option:selected').attr('data-rate'));
+});
+
+function setGamePrice(){
+	$("#game_id").slideToggle();
+	$("#game_price").slideToggle();
+}
+
+</script>
+</block>

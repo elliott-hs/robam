@@ -1,0 +1,95 @@
+/* CSS Document */
+@charset "utf-8";
+#lb_head{
+	background-color:#f8f8f8;
+	min-height:45px;
+	line-height:30px;
+}
+.head_title{
+	/*color:#FFF;*/
+	text-align:center;
+	font-size:20px;
+	/*font-weight:bold;*/
+}
+/******banner******/
+#lb_banner{
+	
+}
+/*******lb_star**********/
+#lb_star{
+	
+}
+.lb_pro{
+	background-color:#FFF;
+	min-height:33px;
+	border: 1px solid transparent;
+	border-color: #ddd;
+}
+.pro_title{
+	/*color:#59bcff;*/
+	text-align:center;
+	font-size:18px;
+	line-height:26px;
+}
+.pro_title2{
+	/*color:#59bcff;*/
+	text-align:center;
+	font-size:18px;
+	line-height:36px;
+}
+/************************/
+#lb_pro{
+	/*background-color:#f0f0f2;*/
+}
+.pro_bg{
+	background-color:#FFF;
+}
+#lb_pro img{
+	max-width:371px;
+	height: auto;
+}
+.hot_bg{
+	background-color:#f0f0f2;
+}
+.hot_pro_bg{
+	
+}
+.pro_mar{
+	margin-bottom:10px;
+}
+#lb_nav{
+	margin-top:10px;
+}
+@media (max-width: 1080px) {
+	
+}
+@media (max-width:767px){
+	#lb_head{
+		min-height:30px;
+		line-height:26px;
+	}
+	#lb_head .nav > li > a {
+		padding: 8px 4px;
+	}
+	.head_title{
+		text-align:center;
+		font-size:10px;
+	}
+	.pro_title{
+		font-size:10px;
+		line-height:12px;
+	}
+	.pro_title2{
+		font-size:14px;
+	}
+	#lb_pro img{
+		max-width:150px;
+		height: auto;
+	}
+
+#lb_search{
+		margin-top:100px;
+	}
+
+	
+}

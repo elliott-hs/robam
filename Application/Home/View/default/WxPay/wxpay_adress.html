@@ -1,0 +1,46 @@
+<div>正在跳转......</div>
+<script charset="utf-8" type="text/javascript" src="__JS__/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+function editAddress(){
+	WeixinJSBridge.invoke(
+		'editAddress',
+		{$editAddress},
+		function(res){
+			//alert(res.err_msg);
+			var username = res.userName;
+			
+			var value1 = res.proviceFirstStageName;
+			var value2 = res.addressCitySecondStageName;
+			var value3 = res.addressCountiesThirdStageName;
+			var addressDetailInfo = res.addressDetailInfo;
+			var address = value1+value2+value3+addressDetailInfo;
+			var tel = res.telNumber;
+			if(res.err_msg == "edit_address:fail" || res.err_msg == "edit_address:cancel"){
+				window.location.href="{$address_url}";
+			}
+			if(res.err_msg == "edit_address:ok"){
+				$.getJSON('__APP__/Address/addAddress', {username:username,addressDetailInfo:address,tel:tel}, function(json){	
+				//alert(json.addressid);
+					window.location.href="{$address_url}&addressid="+json.addressid;
+				})
+				
+			}
+			
+				
+				//alert(value1 + value2 + value3 + value4 + ":" + tel);
+		}
+	);
+}
+;(function(){
+	if (typeof WeixinJSBridge == "undefined"){
+		if( document.addEventListener ){
+			document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+		}else if (document.attachEvent){
+			document.attachEvent('WeixinJSBridgeReady', editAddress); 
+			document.attachEvent('onWeixinJSBridgeReady', editAddress);
+		}
+	}else{
+		editAddress();
+	}
+})();
+</script>

@@ -1,0 +1,100 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>任务明细</h2>
+	</div>
+	<div class="cf">
+		<div class="fl">
+      
+            <button class="btn ajax-post" url="{:U('User/changeStatus',array('method'=>'resumeUser'))}" target-form="ids">导 出</button>
+            
+        </div>
+
+        <!-- 高级搜索 -->
+		<div class="search-form fr cf">
+			 
+		</div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table table-striped">
+	<table class="">
+    <thead>
+        <tr>
+		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th class="">季度</th>
+		<th class="">任务</th>
+		<th class="">销售</th>
+		<th class="">返利</th>
+		<th class="">进度（%）</th>
+		<th class="">奖励</th>
+ 
+		</tr>
+    </thead>
+    <tbody>
+		<notempty name="_list">
+		<volist name="_list" id="vo">
+			<?php $tmp_task +=$vo['task'];?>
+			 		<?php $tmp_price_order +=$vo['price_order'];?>
+			 		<?php $tmp_reward +=$vo['reward'];?>
+			 		<?php $tmp_task_reward +=$vo['task_reward'];?>
+		<tr>
+            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.uid}" /></td>
+			<td>{$vo.season} </td>
+			<td>{$vo.task|floatval}</td>
+			<td>{$vo.price_order|floatval}</td>
+			<td>{$vo.reward|floatval}</td>
+			<td>{$vo.rate|floatval}</td>
+			<td>{$vo.task_reward}</td>
+		</tr>
+		</volist>
+		 <tr >
+		 	 <td><input class="ids" type="checkbox" name="id[]" value="{$vo.uid}" /></td>
+				<td>总计</td>
+				<td>{$tmp_task}</td>
+				<td>{$tmp_price_order}</td>
+				<td>{$tmp_reward}</td>
+				<td><?php $tmp = ($tmp_price_order/$tmp_task)*100;
+					echo floatval(sprintf("%.2f",$tmp));?></td>
+				<td>{$tmp_task_reward|floatval}</td>
+			  </tr>
+		<else/>
+		<td colspan="9" class="text-center"> aOh! 暂时还没有内容! </td>
+		</notempty>
+	</tbody>
+    </table>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+	<script type="text/javascript">
+	//搜索功能
+	$("#search").click(function(){
+		var url = $(this).attr('url');
+        var query  = $('.search-form').find('input').serialize();
+        query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+        query = query.replace(/^&/g,'');
+        if( url.indexOf('?')>0 ){
+            url += '&' + query;
+        }else{
+            url += '?' + query;
+        }
+		window.location.href = url;
+	});
+	//回车搜索
+	$(".search-input").keyup(function(e){
+		if(e.keyCode === 13){
+			$("#search").click();
+			return false;
+		}
+	});
+    //导航高亮
+    highlight_subnav('{:U('User/index')}');
+	</script>
+</block>

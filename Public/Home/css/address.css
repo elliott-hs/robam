@@ -1,0 +1,42 @@
+/* CSS Document */
+@charset "utf-8";
+#lb_head{
+	background-color:#f8f8f8;
+	min-height:45px;
+	line-height:45px;
+}
+#lb_head .btn{
+	border-radius: 0;
+	border:0;
+}
+#lb_head .head_fdj .btn{
+	background-color:#f8f8f8;
+}
+.head_title{
+	text-align:center;
+	font-size:20px;
+}
+#lb_address .btn{
+	border-radius: 0;
+	border:0;
+}
+.lb_pro{
+	background-color:#FFF;
+	min-height:33px;
+	border: 1px solid transparent;
+	border-color: #ddd;
+	line-height:30px;
+	padding:5px;
+}
+@media (max-width: 1080px) {
+	
+}
+@media (max-width:767px){
+	.head_title{
+		text-align:center;
+		font-size:16px;
+	}
+	#lb_address{
+		margin-top:50px;
+	}
+}
