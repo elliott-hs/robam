@@ -47,18 +47,13 @@ class ReportController extends AdminController {
 		}
 
  		$map['a.id'] = array('in',$id);
- 		$map['a.status'] = 1;
  		$member = D('ucenter_member')
  			->alias('a')
  			->join('robam_member b ON b.uid= a.id')
  			->where($map)
  			->select();
-            print_r($map);
 
-
-            exit('ww');
- 
- 	  
+        //导出用户数据 	  
  		foreach ($member as $key => $value) {
  	 		$i = $key*5+2; $j = $i+4;
  	 		//渠道商账号

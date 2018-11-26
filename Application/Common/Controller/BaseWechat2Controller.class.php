@@ -22,12 +22,12 @@ class BaseWechat2Controller extends Controller {
     }
 
     public function _initialize() {
-        $v = $this->isWeixinBrowser();
-        if (!$v) {
-            exit('open in wechat');
-        }
-        $this->openid = session('wechatUser.openid');
-        // $this->openid = 'o7tZVwnz_iwkEcAkejfW-p3oQUf8';
+        // $v = $this->isWeixinBrowser();
+        // if (!$v) {
+        //     exit('open in wechat');
+        // }
+        // $this->openid = session('wechatUser.openid');
+        $this->openid = 'o7tZVwnz_iwkEcAkejfW-p3oQUf8';
         if (empty($this->openid)) {
             $wechat = new \Common\Model\WechatModel();
             $wechat->getOpenId();

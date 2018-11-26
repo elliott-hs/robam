@@ -95,10 +95,10 @@ function pay_status($status){
             return '货到付款';
             break;
         case '1':
-            return '支付宝支付';
+            return '微信支付';
             break;
         case '2':
-            return '微信支付';
+            return '支付宝支付';
             break;
         case '3':
             return '网银支付';
@@ -139,7 +139,7 @@ function price_active($goods_id){
             if($active['type']==1){
                 $data['price'] = $active['price_active'];
             }elseif($active['type']==2){
-                $data['price'] = floatval($price_market*$active['price_active']/100);
+                $data['price'] = floatval($price_sale*$active['price_active']/100);
             }
         }else{
             if($item['game_start']<NOW_TIME&&$item['game_end']>NOW_TIME){
@@ -152,5 +152,4 @@ function price_active($goods_id){
         return $data;
     }
 }
-
 ?>

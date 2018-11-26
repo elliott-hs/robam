@@ -15,10 +15,21 @@
 </head>
 <body>
 <div class="container">
-  
+   <div class="fix">
+    <!--head begin 1-->
+    <div id="lb_head" class="row">
+      <div class="col-sm-1 col-xs-2 ">
+      <a href="<?php echo ($_SERVER['HTTP_REFERER']); ?>" class="btn btn-lg" role="button" style="color: black">
+      <i class="glyphicon glyphicon-chevron-left"></i></a>
+      </div>
+      <div class="col-sm-10 col-xs-8 head_title">购物车</div>
+      <div class="col-sm-1 col-xs-2 head_jia"></div> 
+    </div>
+    <!--head end 1-->
+  </div> 
  
   <!--lb_cart begin 3-->
-  <div id="lb_carts" class="row"  style="margin-top:10px;">
+  <div id="lb_carts" class="row"  style="margin-top:60px;">
 	<form class="form-horizontal" role="form" action="" method="post"  name="product_order" id="product_order">
 
 	<?php if(is_array($list)): foreach($list as $key=>$vo): $total +=$vo['price']; ?>

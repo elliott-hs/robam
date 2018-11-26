@@ -43,6 +43,7 @@ class OrderController extends Home2Controller {
 
 	//下单
 	public function join(){
+
 		//订单号
 		$order_id = 'ROBAM'.date('mdhis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
 		//数据完整性检测
@@ -95,7 +96,7 @@ class OrderController extends Home2Controller {
 			if(!$price_sales['price']){
 				$this->error('系统价格异常,请重试');
 			}
-			$price_order = $price_sales['price']*I('num');
+			$price_order = $price_sales['price'] * I('num');
 			//提成比例
 			$reward_rate = $item['reward_rate'];
 			if(!$reward_rate){
@@ -131,7 +132,8 @@ class OrderController extends Home2Controller {
 			'user_id'    => session('user_auth.uid'),
 			'create_time'=> NOW_TIME,
 			'reward_money'=>$reward_money,
-			'status'=>1
+			'status'=>1,
+			'pay_type'=>1,
 		);
 		$address = D("shop_address")->def_address($this->user_id);
 		if(!empty($address)){

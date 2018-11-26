@@ -23,6 +23,9 @@ class CartController extends HomeController {
 	public function index(){
 		$map['status'] = 1;
    		$map['user_id'] = $this->user_id;
+   		if(!$this->user_id){
+   			$this->error('用户身份异常');
+   		}
    		$list = D('shop_cart')->where($map)->order('create_time')->select();
    		$this->assign('list',$list);
    		$this->display();
@@ -37,7 +40,14 @@ class CartController extends HomeController {
 			$result['msg'] = '商品不存在，或下架';
 		}
 		$model = D('shop_cart');
-		$map = array('goods_id'=>I('goods_id'),'color_name'=>I('color_name'),'fuel_name'=>I('fuel_name'),'status'=>1);
+
+		$map = array('goods_id'=>I('goods_id'),'status'=>1);
+		if(I('color_name')){
+			$map['color_name'] = I('color_name');
+		}
+		if(I('fuel_name')){
+			$map['fuel_name'] = I('fuel_name');
+		}
 		$joined = $model->where($map)->find();
 		if($joined){
 		 	$ros = $model->where('id='.$joined['id'])->setInc('num',I('num'));
