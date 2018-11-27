@@ -87,8 +87,11 @@
 					<ul id="sub-sch-menu" class="nav-list hidden">
 						<li><a href="javascript:;" value="0">所有</a></li>
 						<li><a href="javascript:;" value="1">未付款</a></li>
-						<li><a href="javascript:;" value="2">货到付</a></li>
-						<li><a href="javascript:;" value="3">已完成</a></li>
+						<li><a href="javascript:;" value="2">已付款</a></li>
+						<li><a href="javascript:;" value="3">已发货</a></li>
+						<li><a href="javascript:;" value="4">已完成</a></li>
+						<li><a href="javascript:;" value="5">已退货</a></li>
+						<li><a href="javascript:;" value="6">已结算</a></li>
 					</ul>
 				</div>
 				<input type="text" name="title" class="search-input" value="{:I('title')}" placeholder="输入订单号或渠道商名称">
@@ -137,22 +140,40 @@
 								<switch name="vo.status">
 								    <case value="1">未付款</case>
 								    <case value="2">已付款</case>
-								    <case value="3">已完成</case>
-								    <case value="4">已退货</case>
+								    <case value="3">已发货(安装)</case>
+								    <case value="4">已完成</case>
+								    <case value="5">已退货</case>
+								    <case value="6">已结算</case>
 								    <default />未知
 								</switch>
 
 
 							</div></td>
 							<td>
-								<if condition="$vo['status'] eq 2">
-								<a class="btn"  style="background-color:red;margin-top:10px;" onclick="order_complant('{$vo.order_id}',$(this))">确认退货</a>
+						
+								<if condition="UID eq 1">
+									<a class="btn"  style="background-color:red;margin-top: 2px;" onclick="order_complant('{$vo.order_id}',2)">确认付款</a>
+									<a class="btn "  style="background-color:red;margin-top: 2px;width: 20%;" onclick="order_complant('{$vo.order_id}',3)">确认发货</a>
+									<a class="btn " style="background-color:red;margin-top: 2px;width: 20%;"  onclick="order_complant('{$vo.order_id}',4)">确认完成</a>
+									<a class="btn " style="background-color:red;margin-top: 2px;width: 20%;"  onclick="order_complant('{$vo.order_id}',5)">确认退货</a>
+									<a class="btn  " style="background-color:red;margin-top: 2px;width: 20%;"  onclick="order_complant('{$vo.order_id}',6)">确认结算</a>
+								
+								<else />
+									<if condition="$vo['status'] eq 1">
+										<a class="btn"  style="background-color:red;margin-top:2px;" onclick="order_complant('{$vo.order_id}',2)">确认付款</a>
+									</if>
+									<if condition="$vo['status'] eq 2">
+										<a class="btn"  style="background-color:red;margin-top:2px;" onclick="order_complant('{$vo.order_id}',3)">确认发货</a>
+									</if>
+								<!-- 	<input  class="btn"  onclick="print({$k})" type="button" value="打印" ></input> -->
+	    							<if condition="$vo['status'] eq 3">
+										<a class="btn" style="background-color:red;margin-top:2px;"  onclick="order_complant('{$vo.order_id}',4)">确认完成</a>
+									</if>
+									<if condition="$vo['status'] eq 4">
+										<a class="btn" style="background-color:red;margin-top:2px;"  onclick="order_complant('{$vo.order_id}',5)">确认退货</a>
+										<a class="btn" style="background-color:red;margin-top:2px;"  onclick="order_complant('{$vo.order_id}',6)">确认结算</a>
+									</if>
 								</if>
-								<input  class="btn"  onclick="print({$k})" type="button" value="打印" ></input>
-    							<if condition="$vo['status'] eq 2">
-									<a class="btn"  onclick="order_complant('{$vo.order_id}',$(this))">完成</a>
-								</if>
-
 							</td>
 						</tr>
 						<volist name="vo['goods']" id="g">
@@ -207,7 +228,7 @@
 				<div class="hidden" id="print{$k}" style="text-align: center;">
 						<div><hr></div>
 						<div>
-							 订单编号：{$vo.order_id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：{$vo.order_time|time_format}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							 订单编实时号：{$vo.order_id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：{$vo.order_time|time_format}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 						</div>
 						<div>
@@ -218,13 +239,13 @@
 								    <case value="1">微信支付</case>
 								    <case value="2">支付宝</case>
 								    <case value="3">网银支付</case>
-								    <default />未知
+								    <default />未知方式
 								</switch>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态：
 								<switch name="vo.status">
 								    <case value="1">未付款</case>
 								    <case value="2">货到付款</a></case>
 								    <case value="3">完成</case>
-								    <default />未知
+								    <default />未知方式
 								</switch>
 
 
@@ -335,10 +356,12 @@ $(function(){
 
 })
 
-function order_complant(id,obj){
-	$.post("{:U('orders/complate_order')}",{"order_id":id,'status':'3'},function(data){
-		if(data){
-			obj.removeClass('btn').removeAttr('onclick').html('<a>完成</a>');
+function order_complant(id,status){
+	$.post("{:U('orders/complate_order')}",{"order_id":id,'status':status},function(data){
+		if(data==true){
+			window.location.reload();
+		}else{
+			alert('确认失败,请联系管理员');
 		}
 	})
 }

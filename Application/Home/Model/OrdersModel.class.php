@@ -54,7 +54,7 @@ class OrdersModel extends Model{
     public function list_season($user_id,$season_time){
         $map['create_time'] = array('between',$season_time);
         $map['user_id'] = $user_id;
-        $map['status'] = 3;
+        $map['status'] = 4;
         $result = $this->where($map)->select();
         return $result;
     }

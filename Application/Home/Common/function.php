@@ -78,10 +78,16 @@ function order_status($status){
             return '已付款';
             break;
         case '3':
-            return '完成';
+            return '已发货';
             break;
         case '4':
-            return '退货';
+            return '已完成';
+            break;
+        case '5':
+            return '已退货';
+            break;
+        case '6':
+            return '已结算';
             break;
         default:
             return '未知';

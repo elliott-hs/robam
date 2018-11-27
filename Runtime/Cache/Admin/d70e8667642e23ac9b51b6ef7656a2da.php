@@ -171,8 +171,11 @@
 					<ul id="sub-sch-menu" class="nav-list hidden">
 						<li><a href="javascript:;" value="0">所有</a></li>
 						<li><a href="javascript:;" value="1">未付款</a></li>
-						<li><a href="javascript:;" value="2">货到付</a></li>
-						<li><a href="javascript:;" value="3">已完成</a></li>
+						<li><a href="javascript:;" value="2">已付款</a></li>
+						<li><a href="javascript:;" value="3">已发货</a></li>
+						<li><a href="javascript:;" value="4">已完成</a></li>
+						<li><a href="javascript:;" value="5">已退货</a></li>
+						<li><a href="javascript:;" value="6">已结算</a></li>
 					</ul>
 				</div>
 				<input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="输入订单号或渠道商名称">
@@ -216,17 +219,29 @@
 								    <?php default: ?>未知<?php endswitch;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单状态：
 								<?php switch($vo["status"]): case "1": ?>未付款<?php break;?>
 								    <?php case "2": ?>已付款<?php break;?>
-								    <?php case "3": ?>已完成<?php break;?>
-								    <?php case "4": ?>已退货<?php break;?>
+								    <?php case "3": ?>已发货(安装)<?php break;?>
+								    <?php case "4": ?>已完成<?php break;?>
+								    <?php case "5": ?>已退货<?php break;?>
+								    <?php case "6": ?>已结算<?php break;?>
 								    <?php default: ?>未知<?php endswitch;?>
 
 
 							</div></td>
 							<td>
-								<?php if($vo['status'] == 2): ?><a class="btn"  style="background-color:red;margin-top:10px;" onclick="order_complant('<?php echo ($vo["order_id"]); ?>',$(this))">确认退货</a><?php endif; ?>
-								<input  class="btn"  onclick="print(<?php echo ($k); ?>)" type="button" value="打印" ></input>
-    							<?php if($vo['status'] == 2): ?><a class="btn"  onclick="order_complant('<?php echo ($vo["order_id"]); ?>',$(this))">完成</a><?php endif; ?>
-
+						
+								<?php if(UID == 1): ?><a class="btn"  style="background-color:red;margin-top: 2px;" onclick="order_complant('<?php echo ($vo["order_id"]); ?>',2)">确认付款</a>
+									<a class="btn "  style="background-color:red;margin-top: 2px;width: 20%;" onclick="order_complant('<?php echo ($vo["order_id"]); ?>',3)">确认发货</a>
+									<a class="btn " style="background-color:red;margin-top: 2px;width: 20%;"  onclick="order_complant('<?php echo ($vo["order_id"]); ?>',4)">确认完成</a>
+									<a class="btn " style="background-color:red;margin-top: 2px;width: 20%;"  onclick="order_complant('<?php echo ($vo["order_id"]); ?>',5)">确认退货</a>
+									<a class="btn  " style="background-color:red;margin-top: 2px;width: 20%;"  onclick="order_complant('<?php echo ($vo["order_id"]); ?>',6)">确认结算</a>
+								
+								<?php else: ?>
+									<?php if($vo['status'] == 1): ?><a class="btn"  style="background-color:red;margin-top:10px;width: 20%;" onclick="order_complant('<?php echo ($vo["order_id"]); ?>',2)">确认付款</a><?php endif; ?>
+									<?php if($vo['status'] == 2): ?><a class="btn"  style="background-color:red;margin-top:10px;width: 20%;" onclick="order_complant('<?php echo ($vo["order_id"]); ?>',3)">确认发货</a><?php endif; ?>
+								<!-- 	<input  class="btn"  onclick="print(<?php echo ($k); ?>)" type="button" value="打印" ></input> -->
+	    							<?php if($vo['status'] == 3): ?><a class="btn" style="background-color:red;margin-top:10px;width: 20%;"  onclick="order_complant('<?php echo ($vo["order_id"]); ?>',4)">确认完成</a><?php endif; ?>
+									<?php if($vo['status'] == 4): ?><a class="btn" style="background-color:red;margin-top:10px;width: 20%;"  onclick="order_complant('<?php echo ($vo["order_id"]); ?>',5)">确认退货</a>
+										<a class="btn" style="background-color:red;margin-top:10px;width: 20%;"  onclick="order_complant('<?php echo ($vo["order_id"]); ?>',6)">确认结算</a><?php endif; endif; ?>
 							</td>
 						</tr>
 						<?php if(is_array($vo['goods'])): $i = 0; $__LIST__ = $vo['goods'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$g): $mod = ($i % 2 );++$i;?><tr class="smallfont">
@@ -274,7 +289,7 @@
 		<?php if(is_array($list)): $k = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($k % 2 );++$k;?><div class="hidden" id="print<?php echo ($k); ?>" style="text-align: center;">
 						<div><hr></div>
 						<div>
-							 订单编号：<?php echo ($vo["order_id"]); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：<?php echo (time_format($vo["order_time"])); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							 订单编实时号：<?php echo ($vo["order_id"]); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：<?php echo (time_format($vo["order_time"])); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 						</div>
 						<div>
@@ -284,11 +299,11 @@
 								    <?php case "1": ?>微信支付<?php break;?>
 								    <?php case "2": ?>支付宝<?php break;?>
 								    <?php case "3": ?>网银支付<?php break;?>
-								    <?php default: ?>未知<?php endswitch;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态：
+								    <?php default: ?>未知方式<?php endswitch;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态：
 								<?php switch($vo["status"]): case "1": ?>未付款<?php break;?>
 								    <?php case "2": ?>货到付款</a><?php break;?>
 								    <?php case "3": ?>完成<?php break;?>
-								    <?php default: ?>未知<?php endswitch;?>
+								    <?php default: ?>未知方式<?php endswitch;?>
 
 
 
@@ -486,10 +501,12 @@ $(function(){
 
 })
 
-function order_complant(id,obj){
-	$.post("<?php echo U('orders/complate_order');?>",{"order_id":id,'status':'3'},function(data){
-		if(data){
-			obj.removeClass('btn').removeAttr('onclick').html('<a>完成</a>');
+function order_complant(id,status){
+	$.post("<?php echo U('orders/complate_order');?>",{"order_id":id,'status':status},function(data){
+		if(data==true){
+			window.location.reload();
+		}else{
+			alert('确认失败,请联系管理员');
 		}
 	})
 }

@@ -165,7 +165,7 @@ class OrderController extends Home2Controller {
 		}elseif($orders['status']==0){
 			$this->redirect('order/my', array('order_id' => $order_id));
 		}
-		if($pay_type==2){//微信支付
+		if($pay_type==1){//微信支付
 			Vendor("wxpay.lib.JsApiPay");
             $tools = new \JsApiPay();
             $openId = session('wechatUser.openid');
@@ -222,10 +222,10 @@ class OrderController extends Home2Controller {
 	//我的订单
 	public function my(){
 		$status = I('status');
-		if($status==3){
-			$map['status'] = 3;
+		if($status==4){
+			$map['status'] = 4;
 		}elseif ($status['status']==1) {
-			$map['status'] = array('in','1,2');
+			$map['status'] = array('in','1,2,3,5');
 		}
 		$map['user_id'] = session('user_auth.uid');
 		$orders = D('orders')->where($map)->order('create_time desc')->select();
